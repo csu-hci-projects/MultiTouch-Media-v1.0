@@ -1,0 +1,23 @@
+{
+  "name": "multitouch-media-v1.0",
+  "version": "1.0.0",
+  "description": "A multitouch paint application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csu-hci-projects/MultiTouch-Media-v1.0.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csu-hci-projects/MultiTouch-Media-v1.0/issues"
+  },
+  "homepage": "https://github.com/csu-hci-projects/MultiTouch-Media-v1.0#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "hammerjs": "^2.0.8"
+  }
+}
