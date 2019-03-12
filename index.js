@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const port = 8088;
+const port = 1025;
 app.get('/', main);
 function main(req, res){
     res.send("A multitouch paint app.");
