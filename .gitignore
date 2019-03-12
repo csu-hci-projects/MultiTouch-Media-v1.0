@@ -1,0 +1,7 @@
+#Add files and folders here that should not be added to the git repo.
+node_modules/
+package-lock.json
+
+# IntelliJ items; the .idea directory and all project files.
+.idea/
+*.iml
