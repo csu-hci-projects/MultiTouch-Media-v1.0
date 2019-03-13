@@ -5,6 +5,7 @@ const port = 8088;
 app.set('view engine', 'pug');
 app.get('/', main)
 app.use('/js', express.static(__dirname + '/js/'));
+app.use('/css', express.static(__dirname + '/css/'));
 
 function main(req, res){
 
