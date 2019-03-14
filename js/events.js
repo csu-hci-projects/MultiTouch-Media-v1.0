@@ -2,20 +2,20 @@
 $(document).ready(function(){    
     Paint_onLoad();
     var touches = [];
-    $('canvas').on('touchstart', function(e){
+    $('canvas, img').on('touchstart', function(e){
     });
     
-    $('canvas').on('touchmove', function(e){
+    $('canvas, img').on('touchmove', function(e){
         let t = e.originalEvent.touches[0];
         let pos = {x: t.pageX, y: t.pageY};
         drawPoint(pos);
     });
 
-    $('canvas').on('touchend', function(e){ 
+    $('canvas, img').on('touchend', function(e){
         touchEnd();
     });
 
-    $('canvas').on('touchcancel', function(e){
+    $('canvas, img').on('touchcancel', function(e){
         touchEnd();
     });    
 
