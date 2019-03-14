@@ -42,3 +42,9 @@ function getRandomColor() {
   }
   return color;
 }
+
+function getTouchPos(event, index){
+    let t = event.originalEvent.touches[index];
+    let pos = {x: t.pageX, y: t.pageY};
+    return pos;
+}
