@@ -2,9 +2,13 @@ html
     head
         title cs464 Multitouch Project
         script(src='http://code.jquery.com/jquery-3.3.1.js')
-        script(src='../js/paint.js')
-        script(src='../js/hammer.min.js')
+        script
+            include ../js/events.js
+            include ../js/paint.js
+            include ../js/hammer.min.js
+        style
+            include ../css/main.css
     body
         div#canvasWrapper
-            canvas
+            canvas#paint
 
