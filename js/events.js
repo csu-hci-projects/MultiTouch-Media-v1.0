@@ -3,12 +3,11 @@ $(document).ready(function(){
     Paint_onLoad();
     var touches = [];
     $('canvas').on('touchstart', function(e){
+        drawPoint(getTouchPos(e, 0));
     });
     
     $('canvas').on('touchmove', function(e){
-        let t = e.originalEvent.touches[0];
-        let pos = {x: t.pageX, y: t.pageY};
-        drawPoint(pos);
+        drawPoint(getTouchPos(e, 0));
     });
 
     $('canvas').on('touchend', function(e){ 
@@ -20,4 +19,9 @@ $(document).ready(function(){
     });    
 
     $(window).resize(Paint_onResize);
+    function getTouchPos(event, index){
+        let t = event.originalEvent.touches[index];
+        let pos = {x: t.pageX, y: t.pageY};
+        return pos;
+    }
 });
