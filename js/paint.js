@@ -20,15 +20,21 @@ function drawPoint(pos){
         ctx.moveTo(last.x, last.y);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
-        
     } 
-    last = Object.assign({}, pos);    
-    
+    last = Object.assign({}, pos);
+}
+
+function increasePenWidth(){
+    ctx.lineWidth += 2;
+}
+
+function changeColor(){
+    ctx.strokeStyle = getRandomColor();
 }
 
 function touchEnd(){
-    color = getRandomColor();
-    ctx.strokeStyle = color;
+    // color = getRandomColor();
+    // ctx.strokeStyle = color;
     last = null;
    ctx.beginPath();
 }
