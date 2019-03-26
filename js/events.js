@@ -19,8 +19,17 @@ $(document).ready(function(){
             touchEnd();
             clicking = false;
         }
-    }); 
-    
+    });
+
+    $('canvas, img').on('dblclick', function (e) {
+        e.preventDefault();
+        increasePenWidth();
+    });
+
+    $('canvas, img').on('contextmenu', function (e) {
+        e.preventDefault();
+        changeColor();
+    });
 
     $('canvas, img').on('touchstart', function(e){ 
         drawPoint(getTouchPos(e, 0));
