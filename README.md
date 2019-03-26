@@ -10,3 +10,17 @@ We will be using a multi-touch display to create an interactive painting program
 | Aislinn Jeske | jeskea | aislinnjeske | jeskea@rams.colostate.edu
 | Zack Jones | zackaryj | justzack | zackaryj@rams.colostate.edu
 
+
+
+## How to use the program
+
+This command runs Multi-Touch Media on your local host on port 8088:
+
+`./run`
+
+### Controls
+
+| Click | Control | 
+|------|-----|
+| Right | Change pen color |
+| Double left | Increase pen size |
