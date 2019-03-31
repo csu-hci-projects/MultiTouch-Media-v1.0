@@ -1,13 +1,11 @@
 html
     head
         title Multi-Touch Media
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
         script(src='http://code.jquery.com/jquery-3.3.1.js')
-        script
-            include ../js/events.js
-            include ../js/paint.js
-            include ../js/hammer.min.js
-        style
-            include ../css/main.css
+        script(src='../js/lib/zingtouch.min.js')    
+        script(src='../js/touch_zing.js')
+        style(href='../css/main.css')
     body
         img(src="../images/logo.jpg")
         div#canvasWrapper
