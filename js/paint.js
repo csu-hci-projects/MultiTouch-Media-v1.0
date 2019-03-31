@@ -28,7 +28,7 @@ let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 20, PEN_DIFF_SCALAR = 100;
 function changePenWidth(diff){
     if(ctx.lineWidth == MIN_PEN_WIDTH || ctx.lineWidth == MAX_PEN_WIDTH) return;
     else {
-        let newWidth = ctx.lineWidth + (diff / 100);
+        let newWidth = ctx.lineWidth + (diff / PEN_DIFF_SCALAR);
         
         if(newWidth < MIN_PEN_WIDTH) newWidth = 1;
         else if(newWidth > MAX_PEN_WIDT) newWidth = 20;
