@@ -24,8 +24,17 @@ function drawPoint(pos){
     last = Object.assign({}, pos);
 }
 
-function increasePenWidth(){
-    ctx.lineWidth += 2;
+let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 20, PEN_DIFF_SCALAR = 100;
+function changePenWidth(diff){
+    if(ctx.lineWidth == MIN_PEN_WIDTH || ctx.lineWidth == MAX_PEN_WIDTH) return;
+    else {
+        let newWidth = ctx.lineWidth + (diff / 100);
+        
+        if(newWidth < MIN_PEN_WIDTH) newWidth = 1;
+        else if(newWidth > MAX_PEN_WIDT) newWidth = 20;
+
+        ctx.lineWidth = newWidth;
+    }
 }
 
 function changeColor(){
