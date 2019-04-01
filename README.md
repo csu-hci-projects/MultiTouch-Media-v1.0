@@ -20,8 +20,14 @@ This command runs Multi-Touch Media on your local host on port 8088:
 
 ### Controls
 
-| Click | Control | 
-|------|-----|
-| Left | Hold down to draw |
-| Right | Change pen color |
-| Double left | Increase pen size |
+| Mouse Button | Control | 
+|--------------|---------|
+| Left | Hold Down To Draw |
+| Right | Change Pen Color |
+| Scroll | Adjust Pen Size |
+
+| Touch Gesture | Control | 
+|---------------|---------|
+| Tap & Drag | Draw |
+| Two Finger Swipe | Change Pen Color | 
+| Pinch zoom | Adjust Pen Size |

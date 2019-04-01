@@ -1,11 +1,19 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let canvas, ctx, last, color;
+let canvas, ctx, last, color, lineWidth = 1;
 function Paint_onLoad(){
     canvas = document.getElementById("paint");
     ctx = canvas.getContext("2d");
     Paint_onResize();
     touchEnd();
+
+    $("img#logo").on("load", addLogoToCanvas);
+}
+
+function addLogoToCanvas(){
+    let img = document.getElementById("logo");
+    ctx.drawImage(img, 15, 15);
+    $("img#logo").css({display: 'none'})
 }
 
 function Paint_onResize(){
@@ -17,26 +25,39 @@ function drawPoint(pos){
     //console.log("Drawing point.");
     //console.log(pos);
     if(last !== null) {
-        ctx.moveTo(last.x, last.y);
+        let lastP = last;
+        if(ctx.lineWidth != lineWidth || ctx.strokeStyle != color){
+            touchEnd()
+        }
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = color;
+        ctx.lineCap = "round";
+        ctx.moveTo(lastP.x, lastP.y);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
     } 
     last = Object.assign({}, pos);
 }
 
-function increasePenWidth(){
-    ctx.lineWidth += 2;
+let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
+function changePenWidth(diff){
+    let newWidth = lineWidth + (diff); // PEN_DIFF_SCALAR);
+      
+    if(newWidth < MIN_PEN_WIDTH) newWidth = MIN_PEN_WIDTH;
+    else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
+
+    lineWidth = newWidth;
 }
 
 function changeColor(){
-    ctx.strokeStyle = getRandomColor();
+    color = getRandomColor();
 }
 
 function touchEnd(){
     // color = getRandomColor();
     // ctx.strokeStyle = color;
     last = null;
-   ctx.beginPath();
+    ctx.beginPath();
 }
 
 //Stolen from: https://stackoverflow.com/a/1484514    
@@ -61,3 +82,8 @@ function getTouchPos(event, index){
     let pos = {x: t.pageX, y: t.pageY};
     return pos;
 }
+
+$(document).ready(function(){
+    Paint_onLoad();
+    $(window).resize(Paint_onResize);
+});
