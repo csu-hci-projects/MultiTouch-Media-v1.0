@@ -33,6 +33,6 @@ $(document).ready(function(){
         changePenWidth(e.change);
     }
     function handleRotate(e){
-    
+        changeColor(); 
     }
 });
