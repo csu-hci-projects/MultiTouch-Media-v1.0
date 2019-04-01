@@ -14,12 +14,15 @@ $(document).ready(function(){
     var $canvas = $("canvas#paint");
     $canvas.on('touchstart', handleDraw);
     $canvas.on('touchmove', handleDraw);
-    $canvas.on('touchend, touchcancel', touchEnd);
+    $canvas.on('touchend', handleDrawEnd);
 
     function handleDraw(e){
         //This method does not deal with any more than one finger!
         if(e.originalEvent.touches.length > 1) return;
-        drawPoint(getTouchPos(e))
+        drawPoint(getTouchPos(e, 0))
+    }
+    function handleDrawEnd(e){
+        touchEnd();
     }
     function handleSwipe(e){
         let angle = e.currentDirection;

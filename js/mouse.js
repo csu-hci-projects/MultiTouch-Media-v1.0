@@ -9,13 +9,16 @@ $(document).ready(function(){
     
     var mouseDown = false;
     function handleMouseStart(e){
+        e.preventDefault();
         mouseDown = true;
         drawPoint(getMousePos(e));
     }
     function handleMouseDraw(e){
+        e.preventDefault();
         if(mouseDown) drawPoint(getMousePos(e));  
     }
     function handleMouseEnd(e){
+        e.preventDefault();
         if(mouseDown){    
             drawPoint(getMousePos(e))
             touchEnd();
@@ -29,6 +32,7 @@ $(document).ready(function(){
     }
 
     function handleScroll(e){
+        e.preventDefault();
         if(e.originalEvent.deltaY < 0)  changePenWidth(1);
         else                            changePenWidth(-1);
     }

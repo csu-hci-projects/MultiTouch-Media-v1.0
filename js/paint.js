@@ -7,11 +7,13 @@ function Paint_onLoad(){
     Paint_onResize();
     touchEnd();
 
-    $("img#logo").on("load", function(){ 
-       let img = document.getElementById("logo");
-       ctx.drawImage(img, 15, 15);
-       $("img#logo").css({display: 'none'})
-    })
+    $("img#logo").on("load", addLogoToCanvas);
+}
+
+function addLogoToCanvas(){
+    let img = document.getElementById("logo");
+    ctx.drawImage(img, 15, 15);
+    $("img#logo").css({display: 'none'})
 }
 
 function Paint_onResize(){
@@ -23,11 +25,14 @@ function drawPoint(pos){
     //console.log("Drawing point.");
     //console.log(pos);
     if(last !== null) {
-        if(ctx.lineWidth != lineWidth){
+        let lastP = last;
+        if(ctx.lineWidth != lineWidth || ctx.strokeStyle != color){
             touchEnd()
         }
         ctx.lineWidth = lineWidth;
-        ctx.moveTo(last.x, last.y);
+        ctx.strokeStyle = color;
+        ctx.lineCap = "round";
+        ctx.moveTo(lastP.x, lastP.y);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
     } 
@@ -45,7 +50,7 @@ function changePenWidth(diff){
 }
 
 function changeColor(){
-    ctx.strokeStyle = getRandomColor();
+    color = getRandomColor();
 }
 
 function touchEnd(){
