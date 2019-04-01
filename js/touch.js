@@ -32,7 +32,5 @@ $(document).ready(function(){
     function handlePinch(e){
         changePenWidth(e.change);
     }
-    function handleRotate(e){
-        changeColor(); 
-    }
+    function handleRotate(e){}
 });
