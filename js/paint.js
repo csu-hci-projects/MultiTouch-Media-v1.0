@@ -1,6 +1,6 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let canvas, ctx, last, color;
+let canvas, ctx, last, color, lineWidth = 1;
 function Paint_onLoad(){
     canvas = document.getElementById("paint");
     ctx = canvas.getContext("2d");
@@ -23,6 +23,10 @@ function drawPoint(pos){
     //console.log("Drawing point.");
     //console.log(pos);
     if(last !== null) {
+        if(ctx.lineWidth != lineWidth){
+            touchEnd()
+        }
+        ctx.lineWidth = lineWidth;
         ctx.moveTo(last.x, last.y);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
@@ -30,17 +34,14 @@ function drawPoint(pos){
     last = Object.assign({}, pos);
 }
 
-let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 20, PEN_DIFF_SCALAR = 100;
+let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
 function changePenWidth(diff){
-    if(ctx.lineWidth == MIN_PEN_WIDTH || ctx.lineWidth == MAX_PEN_WIDTH) return;
-    else {
-        let newWidth = ctx.lineWidth + (diff / PEN_DIFF_SCALAR);
-        
-        if(newWidth < MIN_PEN_WIDTH) newWidth = 1;
-        else if(newWidth > MAX_PEN_WIDT) newWidth = 20;
+    let newWidth = lineWidth + (diff); // PEN_DIFF_SCALAR);
+      
+    if(newWidth < MIN_PEN_WIDTH) newWidth = MIN_PEN_WIDTH;
+    else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
 
-        ctx.lineWidth = newWidth;
-    }
+    lineWidth = newWidth;
 }
 
 function changeColor(){
@@ -51,7 +52,7 @@ function touchEnd(){
     // color = getRandomColor();
     // ctx.strokeStyle = color;
     last = null;
-   ctx.beginPath();
+    ctx.beginPath();
 }
 
 //Stolen from: https://stackoverflow.com/a/1484514    

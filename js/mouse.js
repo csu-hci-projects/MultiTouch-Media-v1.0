@@ -4,7 +4,9 @@ $(document).ready(function(){
     $canvas.on('mousedown', handleMouseStart);
     $canvas.on('mousemove', handleMouseDraw);
     $canvas.on('mouseup', handleMouseEnd);
-
+    $canvas.on('contextmenu', handleColorChange);
+    $canvas.on('wheel', handleScroll)
+    
     var mouseDown = false;
     function handleMouseStart(e){
         mouseDown = true;
@@ -19,6 +21,16 @@ $(document).ready(function(){
             touchEnd();
             mouseDown = false;
         }
+    }
+
+    function handleColorChange(e){
+        e.preventDefault();
+        changeColor();
+    }
+
+    function handleScroll(e){
+        if(e.originalEvent.deltaY < 0)  changePenWidth(1);
+        else                            changePenWidth(-1);
     }
 
 });
