@@ -1,14 +1,9 @@
 html
-    head
-        title Multi-Touch Media
-        meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
-        script(src='http://code.jquery.com/jquery-3.3.1.js')
-        script(src='../js/lib/zingtouch.min.js')    
-        script(src='../js/touch_zing.js')
-        script(src='../js/paint.js')
-        style(href='../css/main.css')
+    head 
+        //- Add to head.pug if you need to add something here.
+        include head.pug 
     body
-        img(src="../images/logo.jpg")
+        img#logo(src="../images/logo.jpg")
         div#canvasWrapper
             canvas#paint
 

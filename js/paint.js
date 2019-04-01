@@ -6,6 +6,12 @@ function Paint_onLoad(){
     ctx = canvas.getContext("2d");
     Paint_onResize();
     touchEnd();
+
+    $("img#logo").on("load", function(){ 
+       let img = document.getElementById("logo");
+       ctx.drawImage(img, 15, 15);
+       $("img#logo").css({display: 'none'})
+    })
 }
 
 function Paint_onResize(){
@@ -70,3 +76,8 @@ function getTouchPos(event, index){
     let pos = {x: t.pageX, y: t.pageY};
     return pos;
 }
+
+$(document).ready(function(){
+    Paint_onLoad();
+    $(window).resize(Paint_onResize);
+});
