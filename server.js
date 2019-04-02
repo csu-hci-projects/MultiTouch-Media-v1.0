@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const port = 8888;
+const port = 8088;
 app.set('view engine', 'pug');
 app.get('/', main)
 app.use('/images', express.static(__dirname + '/images'));
