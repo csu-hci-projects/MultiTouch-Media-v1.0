@@ -9,9 +9,9 @@ app.use('/js', express.static(__dirname + '/js/'));
 app.use('/css', express.static(__dirname + '/css/'));
 
 function main(req, res){
-
-
-    res.render('index');
+    let doTouch = true;
+    if(req.param('notouch') === '') doTouch = false; 
+    res.render('index', {touch: doTouch});
 }
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

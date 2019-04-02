@@ -19,7 +19,8 @@ This command runs Multi-Touch Media on your local host on port 8088:
 `./run`
 
 ### Controls
-*Note: Mouse controls are currently overridden by touch controls.*
+A slider in the top right corner can be used to toggle touch control on and off for testing.
+*You must hover over that area to see and use it.*
 
 | Mouse Button | Control | 
 |--------------|---------|
