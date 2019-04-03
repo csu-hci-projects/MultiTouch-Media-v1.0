@@ -10,16 +10,18 @@ $(document).ready(function(){
     var mouseDown = false;
     function handleMouseStart(e){
         e.preventDefault();
-        mouseDown = true;
-        drawPoint(getMousePos(e));
+        if(e.which == 1) { 
+            mouseDown = true;
+            drawPoint(getMousePos(e));
+        }
     }
     function handleMouseDraw(e){
         e.preventDefault();
-        if(mouseDown) drawPoint(getMousePos(e));  
+        if(e.which == 1 && mouseDown) drawPoint(getMousePos(e));  
     }
     function handleMouseEnd(e){
         e.preventDefault();
-        if(mouseDown){    
+        if(e.which == 1 && mouseDown){    
             drawPoint(getMousePos(e))
             touchEnd();
             mouseDown = false;
