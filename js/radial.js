@@ -1,6 +1,9 @@
 function openMenu(where){ 
     $("div#radialWrapper").css({top: where.x + "px", left: where.y + "px"});        
-    $("a#touchArea").animate({padding: "100px"});        
+    $("a#touchArea").animate({
+        top: "-=50px",
+        left: "-=50px",
+        padding: "100px"});        
 }
 
 function closeMenu(){
