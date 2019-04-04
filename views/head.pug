@@ -1,5 +1,5 @@
 title Multi-Touch Media
-meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+//meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
 script(src='http://code.jquery.com/jquery-3.3.1.js')
 if touch
     script(src='../js/lib/zingtouch.min.js')    
@@ -8,6 +8,5 @@ else
     script(src='../js/mouse.js')
 script(src='../js/paint.js')
 script(src='../js/touchtoggle.js')
-style
-    include ../css/main.css
-    include ../css/slider.css
+link(href='../css/main.css', rel='stylesheet')
+link(href='../css/slider.css', rel='stylesheet')

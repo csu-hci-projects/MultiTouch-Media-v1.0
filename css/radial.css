@@ -10,7 +10,7 @@ div#radialWrapper ul, div#radialWrapper ul li{
     padding: 0; 
 }
 
-div#radialWrapper ul li{
+div#radialWrapper ul#tools li{
     border: 2px solid black;
     border-radius: 50%;
     box-sizing: border-box;
@@ -19,10 +19,9 @@ div#radialWrapper ul li{
     background-color: blue;
 }
 
-div#radialWrapper ul li img{
+div#radialWrapper ul#tools li img{
     width: 50px;
     height: 50px;
-
 }
 
 #touchArea{
