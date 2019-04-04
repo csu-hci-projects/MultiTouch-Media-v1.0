@@ -2,7 +2,13 @@ div#radialWrapper {
     position: absolute;
     top: -9999px;
     left: -9999px;
+    transform-origin: 50% 50%;
 }
+
+div#radialWrapper *{
+    transform-origin: 50% 50%;
+}
+
 
 div#radialWrapper ul, div#radialWrapper ul li{
     list-style-type: none;
@@ -10,7 +16,10 @@ div#radialWrapper ul, div#radialWrapper ul li{
     padding: 0; 
 }
 
-div#radialWrapper ul#tools li{
+div#radialWrapper ul#tools li {
+    position: absolute;
+}
+div#radialWrapper ul#tools li img{
     border: 2px solid black;
     border-radius: 50%;
     box-sizing: border-box;
@@ -29,7 +38,7 @@ div#radialWrapper ul#tools li img{
     background: transparent;
     padding: 0;
     margin: 0;
-    border: 2px solid black;
+    border: 0px solid black;
     border-radius: 50%;
 }
 

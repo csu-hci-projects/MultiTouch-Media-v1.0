@@ -14,16 +14,22 @@ function initMenu(){
 function openMenu(where){ 
     $("div#radialWrapper").css({top: where.x + "px", left: where.y + "px"});        
     $("a#touchArea").animate({
-        top: "-=50px",
-        left: "-=50px",
+        "border-width": "2px",
+        "margin-top": "-=50px",
+        "margin-left": "-=50px",
         padding: "100px"});       
-    setIconPositions(where, 360)
+    //setIconPositions(where, 360)
     $("ul#tools").show();
 }
 
 function closeMenu(){
     $("a#touchArea").animate({padding: "0"}, () => {        
-        $("div#radialWrapper").css({top: "-9999px", left: "-9999px"});        
+        $("div#radialWrapper").css({
+            "border-width": 0,
+            top: "-9999px", 
+            left: "-9999px",
+            "margin-top": 0,
+            "margin=left": 0});        
     });
 }
 
@@ -48,19 +54,22 @@ function setIconPositions(where, fanAngle=360){
     let toolPos = [];
     for (let a = start; a > start -  fanAngle; a -= iconAngle){
         let angle = (a % 360) - (iconAngle / 2)
-        let x = Math.round(radius * Math.cos(a * deg2rad));
-        let y = Math.round(radius * Math.sin(a * deg2rad));        
-        toolPos.push({x: x + where.x, y: y + where.y});
+        toolPos.push(posFromAngle(radius, angle));
     }
     
     toolPos.map((pos, i) => {
         $($tools[i]).css({
-            margin: pos.x,
-            left: pos.y
+            "margin-top": pos.x,
+            "margin-left": pos.y
         });
     });
 }
 
+function posFromAngle(radius, angle){
+        let x = Math.round(radius * Math.cos(angle * deg2rad));
+        let y = Math.round(radius * Math.sin(angle * deg2rad));        
+        return {x: x, y: y};
+}
 /*
  * IDEA:
  *      determine the 'starting' angle of the toolset.
