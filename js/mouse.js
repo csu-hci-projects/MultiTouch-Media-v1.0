@@ -5,23 +5,15 @@ $(document).ready(function(){
     $canvas.on('mousemove', handleMouseDraw);
     $canvas.on('mouseup', handleMouseEnd);
     $(document).on('contextmenu', handleRightClick);
-    $canvas.on('wheel', handleScroll)
+    $(document).on('wheel', handleScroll)
     
-    var mouseDown = false;
     function handleMouseStart(e){
-        e.preventDefault();
-        if(menuOpen) closeMenu();
-        if(e.which == 1) { 
-            mouseDown = true;
-            drawPoint(getMousePos(e));
-        }
+        canvasMouseDown(e);   
     }
     function handleMouseDraw(e){
-        e.preventDefault();
         if(e.which == 1 && mouseDown) drawPoint(getMousePos(e));  
     }
     function handleMouseEnd(e){
-        e.preventDefault();
         if(e.which == 1 && mouseDown){    
             drawPoint(getMousePos(e))
             touchEnd();
@@ -41,3 +33,12 @@ $(document).ready(function(){
     }
 
 });
+
+var mouseDown = false;
+function canvasMouseDown(e, now=false){
+    if(menuOpen) closeMenu(now);
+    if(now || e.which == 1) {
+        mouseDown = true;
+        drawPoint(getMousePos(e));
+    }
+}
