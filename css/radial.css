@@ -1,50 +1,19 @@
-div#radialWrapper {
-    position: absolute;
+#radial{
     top: -9999px;
     left: -9999px;
-    transform-origin: 50% 50%;
+    position: absolute;
+    width: 0; height: 0;
+    padding: 0; margin: 0;
 }
 
-div#radialWrapper *{
-    transform-origin: 50% 50%;
+#radial > img{
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 50%; 
 }
 
-
-div#radialWrapper ul, div#radialWrapper ul li{
-    list-style-type: none;
-    margin: 0;
-    padding: 0; 
-}
-
-div#radialWrapper ul#tools li {
+#radial #tools img {
     position: absolute;
 }
-div#radialWrapper ul#tools li img{
-    border: 2px solid black;
-    border-radius: 50%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    padding: 5px;
-    background-color: blue;
-}
 
-div#radialWrapper ul#tools li img{
-    width: 50px;
-    height: 50px;
-}
 
-#touchArea{
-    z-index: 5;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    border: 0px solid black;
-    border-radius: 50%;
-}
-
-#tools{
-    z-index: 0;
-    display: none;
-    position: relative;
-
-}

@@ -4,12 +4,13 @@ $(document).ready(function(){
     $canvas.on('mousedown', handleMouseStart);
     $canvas.on('mousemove', handleMouseDraw);
     $canvas.on('mouseup', handleMouseEnd);
-    $canvas.on('contextmenu', handleColorChange);
+    $(document).on('contextmenu', handleRightClick);
     $canvas.on('wheel', handleScroll)
     
     var mouseDown = false;
     function handleMouseStart(e){
         e.preventDefault();
+        if(menuOpen) closeMenu();
         if(e.which == 1) { 
             mouseDown = true;
             drawPoint(getMousePos(e));
@@ -28,9 +29,9 @@ $(document).ready(function(){
         }
     }
 
-    function handleColorChange(e){
+    function handleRightClick(e){
         e.preventDefault();
-        changeColor();
+        openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
     }
 
     function handleScroll(e){

@@ -1,79 +1,82 @@
-let radius = 50, iconHeight = 50, deg2rad = Math.PI / 180.0;
+let circleRadius = 150, 
+    toolRadius = 35, 
+    fanAngle = 360,
+    toolSpace = 2 * toolRadius, 
+    combinedRadius = circleRadius + toolSpace,
+    fullRadius = combinedRadius + toolRadius,
+    deg2rad = Math.PI / 180.0;
+let menuOpen = false;
 function initMenu(){
-    $("div#radialWrapper").css({
-        width: 0,
-        height: 0,
-        padding: 0,
-        margin: 0
-    });
-    
-
-
+    setMenuAttributes();
+    setToolAttributes();
+    setToolPositions();
 }
 
-function openMenu(where){ 
-    $("div#radialWrapper").css({top: where.x + "px", left: where.y + "px"});        
-    $("a#touchArea").animate({
-        "border-width": "2px",
-        "margin-top": "-=50px",
-        "margin-left": "-=50px",
-        padding: "100px"});       
-    //setIconPositions(where, 360)
-    $("ul#tools").show();
+function openMenu(center){
+  console.log(center);
+    let wDiff = window.innerWidth - (center.x + fullRadius);
+    let wZero = center.x - fullRadius;
+    if(wDiff < 0) center.x += wDiff;
+    else if(wZero < 0) center.x -= wZero;
+
+    let hDiff = window.innerHeight - (center.y + fullRadius);
+    let hZero = center.y - fullRadius;
+    if(hDiff < 0) center.y += hDiff;
+    else if(hZero < 0) center.y -= hZero;
+   
+    console.log(wDiff + " | " + hDiff);
+
+  console.log(center);
+    $("#radial").css({top: center.y, left: center.x})
+                .animate({opacity: 1}, 100);
+    menuOpen = true;
 }
 
-function closeMenu(){
-    $("a#touchArea").animate({padding: "0"}, () => {        
-        $("div#radialWrapper").css({
-            "border-width": 0,
-            top: "-9999px", 
-            left: "-9999px",
-            "margin-top": 0,
-            "margin=left": 0});        
-    });
-}
-
-
-function setMenuLocation(where){
-    $("div#radialWrapper").css({
-        top: where.y - radius,
-        left: where.x - radius,
+function closeMenu(){ 
+    $("#radial").animate({opacity: 0}, 100, function(){
+        $("#radial").css({top: "-9999px",
+                          left: "-9999px"});
+        menuOpen = false;
     });
 }
 
-function setIconPositions(where, fanAngle=360){ 
-    let $tools = $("ul#tools").children();
-    let numTools = $tools.length;
-    
-    //How much of the fanAngle each icon occupies.
-    let iconAngle = fanAngle / numTools;
-    
-    //Relative to the unit cirlce (90deg = up)
-    let start = 90 + fanAngle/2
+function setMenuAttributes(){
+    $("#radial > img").attr({width: 2 * circleRadius + "px", height: 2 * circleRadius + "px"}) 
+    $("#radial > img").css({"margin-top": -circleRadius + "px", 
+                            "margin-left": -circleRadius + "px"});
+    closeMenu();
+}
 
-    let toolPos = [];
-    for (let a = start; a > start -  fanAngle; a -= iconAngle){
-        let angle = (a % 360) - (iconAngle / 2)
-        toolPos.push(posFromAngle(radius, angle));
-    }
-    
-    toolPos.map((pos, i) => {
-        $($tools[i]).css({
-            "margin-top": pos.x,
-            "margin-left": pos.y
-        });
+function setToolAttributes(){
+    $("#tools div").each(function(){
+        $(this).css({
+            width: 2 * toolRadius,
+            height: 2 *toolRadius
+        });  
     });
 }
 
-function posFromAngle(radius, angle){
-        let x = Math.round(radius * Math.cos(angle * deg2rad));
-        let y = Math.round(radius * Math.sin(angle * deg2rad));        
-        return {x: x, y: y};
+function setToolPositions(){
+    let $tools = $("#tools img");
+    let angleIncrement =  fanAngle / $tools.length;
+    let initial = 90 - fanAngle / 2;
+    $tools.each(function(index){
+        let pos = getRelativePos(initial - index * angleIncrement)
+        $(this).css({
+            top: pos.y,
+            left: pos.x,
+            width: 2 * toolRadius,
+            height: 2 *toolRadius
+        });  
+    });
 }
-/*
- * IDEA:
- *      determine the 'starting' angle of the toolset.
- *          --> Straight up minus half of the total angle
- *          --> 90deg - total/2
- *      
- * */
+
+function getRelativePos(angle){
+    let x = combinedRadius * Math.cos(angle * deg2rad);
+    let y = combinedRadius * Math.sin(angle * deg2rad);
+    x -= toolRadius;
+    y -= toolRadius;
+    return {x: x.toFixed(2), y: y.toFixed(2)};
+}
+
+$(document).ready(initMenu);
