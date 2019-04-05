@@ -14,7 +14,7 @@ function initMenu(){
 
     $("#radial > img").on('mousedown', function(e){
         e.stopPropagation();
-        if(e.which == 1) canvasMouseDown(e, true); 
+        canvasMouseDown(e); 
     });
 }
 
