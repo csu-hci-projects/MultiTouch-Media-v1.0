@@ -10,10 +10,15 @@ function initMenu(){
     setMenuAttributes();
     setToolAttributes();
     setToolPositions();
+
+
+    $("#radial > img").on('mousedown', function(e){
+        e.stopPropagation();
+        if(e.which == 1) canvasMouseDown(e, true); 
+    });
 }
 
 function openMenu(center){
-  console.log(center);
     let wDiff = window.innerWidth - (center.x + fullRadius);
     let wZero = center.x - fullRadius;
     if(wDiff < 0) center.x += wDiff;
@@ -24,26 +29,26 @@ function openMenu(center){
     if(hDiff < 0) center.y += hDiff;
     else if(hZero < 0) center.y -= hZero;
    
-    console.log(wDiff + " | " + hDiff);
-
-  console.log(center);
     $("#radial").css({top: center.y, left: center.x})
                 .animate({opacity: 1}, 100);
     menuOpen = true;
 }
 
-function closeMenu(){ 
-    $("#radial").animate({opacity: 0}, 100, function(){
-        $("#radial").css({top: "-9999px",
-                          left: "-9999px"});
-        menuOpen = false;
-    });
+function closeMenu(now=false){ 
+    menuOpen = false
+    //if(now) {
+    //   $("#radial").css({opacity: 0,top: -9999,left: -9999});
+    //}
+    //else {
+        $("#radial").animate({opacity: 0}, 100, function(){
+            $("#radial").css({top: -9999, left: -9999});
+        });
+    //}
 }
 
 function setMenuAttributes(){
-    $("#radial > img").attr({width: 2 * circleRadius + "px", height: 2 * circleRadius + "px"}) 
-    $("#radial > img").css({"margin-top": -circleRadius + "px", 
-                            "margin-left": -circleRadius + "px"});
+    $("#radial > img").attr({width: 2 * circleRadius + "px", height: 2 * circleRadius + "px"}); 
+    $("#radial > img").css({"margin-top": -circleRadius + "px", "margin-left": -circleRadius + "px"});
     closeMenu();
 }
 
