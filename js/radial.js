@@ -13,7 +13,6 @@ function initMenu(){
 
 
     $("#radial > img").on('mousedown', function(e){
-        e.stopPropagation();
         canvasMouseDown(e); 
     });
 }
