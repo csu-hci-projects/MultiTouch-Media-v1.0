@@ -24,8 +24,8 @@ A slider in the top right corner can be used to toggle touch control on and off 
 
 | Mouse Button | Control | 
 |--------------|---------|
-| Left | Hold Down To Draw |
-| Right | Change Pen Color |
+| Left | Hold Down To Draw / Close Menu |
+| Right | Open Menu |
 | Scroll | Adjust Pen Size |
 
 | Touch Gesture | Control | 

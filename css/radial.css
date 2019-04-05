@@ -1,0 +1,19 @@
+#radial{
+    top: -9999px;
+    left: -9999px;
+    position: absolute;
+    width: 0; height: 0;
+    padding: 0; margin: 0;
+}
+
+#radial > img{
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 50%; 
+}
+
+#radial #tools img {
+    position: absolute;
+}
+
+

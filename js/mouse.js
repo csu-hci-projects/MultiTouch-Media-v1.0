@@ -4,31 +4,34 @@ $(document).ready(function(){
     $canvas.on('mousedown', handleMouseStart);
     $canvas.on('mousemove', handleMouseDraw);
     $canvas.on('mouseup', handleMouseEnd);
-    $canvas.on('contextmenu', handleColorChange);
+    $(document).on('contextmenu', handleRightClick);
     $canvas.on('wheel', handleScroll)
     
     var mouseDown = false;
     function handleMouseStart(e){
         e.preventDefault();
-        mouseDown = true;
-        drawPoint(getMousePos(e));
+        if(menuOpen) closeMenu();
+        if(e.which == 1) { 
+            mouseDown = true;
+            drawPoint(getMousePos(e));
+        }
     }
     function handleMouseDraw(e){
         e.preventDefault();
-        if(mouseDown) drawPoint(getMousePos(e));  
+        if(e.which == 1 && mouseDown) drawPoint(getMousePos(e));  
     }
     function handleMouseEnd(e){
         e.preventDefault();
-        if(mouseDown){    
+        if(e.which == 1 && mouseDown){    
             drawPoint(getMousePos(e))
             touchEnd();
             mouseDown = false;
         }
     }
 
-    function handleColorChange(e){
+    function handleRightClick(e){
         e.preventDefault();
-        changeColor();
+        openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
     }
 
     function handleScroll(e){

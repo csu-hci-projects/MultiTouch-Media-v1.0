@@ -10,8 +10,13 @@ app.use('/css', express.static(__dirname + '/css/'));
 
 function main(req, res){
     let doTouch = true;
+    let menu = "radial"
+    
     if(req.param('notouch') === '') doTouch = false; 
-    res.render('index', {touch: doTouch});
+    
+    if(req.param('dial') === '') menu = 'dial'; 
+    else if(req.param('basic') === '') menu = 'basic'; 
+    res.render('index', {touch: doTouch, menu: menu});
 }
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
