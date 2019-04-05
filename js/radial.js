@@ -1,5 +1,5 @@
-let circleRadius = 150, 
-    toolRadius = 35, 
+let circleRadius = 100, 
+    toolRadius = 25, 
     fanAngle = 360,
     toolSpace = 2 * toolRadius, 
     combinedRadius = circleRadius + toolSpace,
