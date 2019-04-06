@@ -11,5 +11,12 @@ function closeMenu(){
 
 function setColor(cellColor){
     color = cellColor;
-    console.log(color);
+}
+
+function increaseSize(){
+    changePenWidth(1)
+}
+
+function decreaseSize(){
+    changePenWidth(-1)
 }
