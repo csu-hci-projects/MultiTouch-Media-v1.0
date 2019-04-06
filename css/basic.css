@@ -1,0 +1,80 @@
+#basic{
+
+    position: absolute;
+    width: 20%; height: 100%;
+    padding: 0; margin: 0;
+    border: 2px solid black;
+    z-index: 10;
+}
+
+#basic #tools img{
+    width: 50px;
+    height: 50px;
+}
+
+#basic #tools #palette{
+    position: absolute;
+    top:20%;
+    left:5%;
+    width: 50px;
+    height: 50px;
+}
+
+#basic #colorSelector{
+    position: absolute;
+    border-collapse: collapse;
+    border-spacing: 0;
+    top: 25%;
+    left:5%;
+}
+
+#basic #colorSelector  td{
+    border-style:solid;
+    border-width: 1px;
+    padding: 15px 15px;
+}
+
+
+
+#basic #tools #lineStyle{
+    position: absolute;
+    top:35%;
+    left:5%;
+    width: 50px;
+    height: 50px;
+}
+#basic #tools #undo{
+    position: absolute;
+    top:50%;
+    left:5%;
+    width: 50px;
+    height: 50px;
+}
+#basic #tools #eraser{
+    position: absolute;
+    top:50%;
+    left:50%;
+    width: 50px;
+    height: 50px;
+}
+
+#basic #tools #save{
+    position: absolute;
+    top: 80%;
+    left: 5%;
+}
+
+#basic #tools #upload{
+    position: absolute;
+    top:65%;
+    left:5%;
+    width: 50px;
+    height: 50px;
+}
+#basic #tools #trash{
+    position: absolute;
+    top:90%;
+    left:5%;
+    width: 50px;
+    height: 50px;
+}
