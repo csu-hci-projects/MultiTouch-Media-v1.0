@@ -10,7 +10,7 @@ app.use('/css', express.static(__dirname + '/css/'));
 
 function main(req, res){
     let doTouch = true;
-    let menu = "radial"
+    let menu = "dial"
     
     if(req.param('notouch') === '') doTouch = false; 
     
