@@ -1,6 +1,7 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let canvas, ctx, last, color, lineWidth = 1;
+let canvas, ctx, lineColor, lineWidth = 1, lines = [];
+let renderInterval = null;
 function Paint_onLoad(){
     canvas = document.getElementById("paint");
     ctx = canvas.getContext("2d");
@@ -8,6 +9,8 @@ function Paint_onLoad(){
     touchEnd();
 
     $("img#logo").on("load", addLogoToCanvas);
+
+    renderInterval = setInterval(render, 100);
 }
 
 function addLogoToCanvas(){
@@ -21,22 +24,46 @@ function Paint_onResize(){
     ctx.canvas.height = window.innerHeight;
 }
 
-function drawPoint(pos){
-    //console.log("Drawing point.");
-    //console.log(pos);
-    if(last !== null) {
-        let lastP = last;
-        if(ctx.lineWidth != lineWidth || ctx.strokeStyle != color){
-            touchEnd()
+let linePointer = 0;
+function render(){
+    if(lines.length == 0) return;
+    while(linePointer < lines.length - 1){ 
+        console.log(lines.length)
+        let line = lines[linePointer];
+        let lineLength = line.points.length;
+        //This is an empty line, so skip it
+        if(line.points.length == 0) continue;
+        
+        //If we are starting at the first point of the line,
+        //Begin a new path.
+        if(line.drawPointer == 0) {
+            ctx.beginPath();
+            ctx.lineWidth = line.width;
+            ctx.strokeStyle = line.color;
+            ctx.lineCap = "round";
+            //Set the starting point for the line.
+            ctx.moveTo(line.points[0].x, line.points[0].y);
         }
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = color;
-        ctx.lineCap = "round";
-        ctx.moveTo(lastP.x, lastP.y);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-    } 
-    last = Object.assign({}, pos);
+    
+        //Draw the line
+        while(line.drawPointer < lineLength - 1){ //While there are points to draw...
+            ctx.lineTo(line.points[0].x, line.points[0].y);
+            ctx.stroke();
+            line.drawPointer++;
+        }
+        //Only increment the linePointer if it is NOT the last line.
+        if(linePointer < lines.length - 1) linePointer++;
+    }
+}
+
+function drawPoint(pos){
+    if(ctx.lineWidth != lineWidth || ctx.strokeStyle != lineColor) 
+        //Lines cannot have different widths/colors,
+        //So anytime those change we need to make a new line.
+        touchEnd();
+
+    //Push the point back to the most recent line.
+    lines[lines.length - 1].push(pos);
 }
 
 let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
@@ -50,14 +77,11 @@ function changePenWidth(diff){
 }
 
 function changeColor(){
-    color = getRandomColor();
+    lineColor = getRandomColor();
 }
 
 function touchEnd(){
-    // color = getRandomColor();
-    // ctx.strokeStyle = color;
-    last = null;
-    ctx.beginPath();
+    lines.push(new Line(lineColor, lineWidth));
 }
 
 //Stolen from: https://stackoverflow.com/a/1484514    
