@@ -11,10 +11,12 @@ function initMenu(){
     setToolAttributes();
     setToolPositions();
 
-
     $("#radial > img").on('mousedown', function(e){
         canvasMouseDown(e); 
     });
+    $("div#tools img#trash").on('mousedown', resetPainting);
+    
+    $("div#tools img#undo").on('mousedown', undo);
 }
 
 function openMenu(center){

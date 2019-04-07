@@ -45,6 +45,10 @@ function canvasMouseDown(e){
         mouseDown = true;
         drawPoint(getMousePos(e));
     } 
-    else if(e.which == 3) openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
+    else if(e.which == 3){
+        touchEnd();
+        mouseDown = false;
+        openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
+    }
     else if(menuOpen) closeMenu();
 }

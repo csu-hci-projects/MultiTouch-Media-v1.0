@@ -24,4 +24,8 @@ class Line {
         if(this.drawPointer == this.points.length) this.hasNext = false;
         return point;
     }
+    reset(){
+        this.drawPointer = 0;
+        this.hasNext = this.points.length > 0;
+    }
 }

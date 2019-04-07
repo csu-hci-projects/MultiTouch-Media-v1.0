@@ -24,27 +24,37 @@ function Paint_onResize(){
 
 let linePointer = 0, doRender = true, point = null, line = null;
 function render(){
-    //If there are no lines, or the last line is fully drawn (implies all lines are drawn) return.
-    while(doRender){
+    //If we should render and there are lines to render, loop.
+    while(doRender && linePointer < lines.length){
+        //If there is a point to be drawn and its the first point...
         if(lines[linePointer].hasNext && lines[linePointer].drawPointer == 0){ 
+            //Start a new path, and set some vars related to this line.
             ctx.beginPath();
             ctx.lineWidth = lines[linePointer].width;
             ctx.strokeStyle = lines[linePointer].color;
+            //Keeps lines looking like they are connected.
             ctx.lineCap = "round";
             //Set the starting point for the line.
             point = lines[linePointer].next();
+            //Move the canvas 'pen' to the first point.
             ctx.moveTo(point.x, point.y);
         }
-
+        //While there are points to draw...
         while(lines[linePointer].hasNext){
+            //Get the point
             point = lines[linePointer].next();
+            //Draw from the previous point to the current point.
             ctx.lineTo(point.x, point.y);
+            //Output the results.
             ctx.stroke();
         }
-
-         //If this line is finished being drawn by the user, 
-        //then all of the points have been drawn for it.
+            //If the line is done being drawn by the user
+           //then we can imply that all of its points have been drawn by the loop above.
+          //Keep in mind that this code runs every 15ms, but is still sequential, 
+         //so `finished` would have been set prior to render being called,
+        //which implies that all of the points are preset in the line when render is called.
         if(lines[linePointer].finished) {
+            //Move on to the next line.
             linePointer++;
             //If there are no more lines to process, stop rendering.
             if(linePointer == lines.length) doRender = false;
@@ -56,31 +66,20 @@ function render(){
 }
 
 function drawPoint(pos){
+    //If the last line to be drawn is finished, make a new line to draw.
+    if(lines.length == 0 || lines[lines.length - 1].finished == true) lines.push(new Line(lineColor, lineWidth));
     //Push the point back to the most recent line.
     let copy = lines[lines.length - 1].push(pos);
     if(!copy) doRender = true;
     if(renderInterval == null) renderInterval = setInterval(render, 15);
 }
 
-let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
-function changePenWidth(diff){
-    let newWidth = lineWidth + (diff); // PEN_DIFF_SCALAR);
-      
-    if(newWidth < MIN_PEN_WIDTH) newWidth = MIN_PEN_WIDTH;
-    else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
 
-    lineWidth = newWidth;
-    touchEnd();
-}
-
-function changeColor(){
-    lineColor = getRandomColor();
-    touchEnd();
-}
-
+  //Informs that this line is done being drawn.
+ //Called whenever a the color/width/many other 
+//This because is lines can only have one color and width on the canvas.
 function touchEnd(){
     if(lines.length > 0) lines[lines.length - 1].finished = true;
-    lines.push(new Line(lineColor, lineWidth));
     doRender = true;
 }
 
