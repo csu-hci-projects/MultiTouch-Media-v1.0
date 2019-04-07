@@ -9,8 +9,6 @@ function Paint_onLoad(){
     touchEnd();
 
     $("img#logo").on("load", addLogoToCanvas);
-
-    renderInterval = setInterval(render, 100);
 }
 
 function addLogoToCanvas(){
@@ -24,46 +22,44 @@ function Paint_onResize(){
     ctx.canvas.height = window.innerHeight;
 }
 
-let linePointer = 0;
+let linePointer = 0, doRender = true, point = null, line = null;
 function render(){
-    if(lines.length == 0) return;
-    while(linePointer < lines.length - 1){ 
-        console.log(lines.length)
-        let line = lines[linePointer];
-        let lineLength = line.points.length;
-        //This is an empty line, so skip it
-        if(line.points.length == 0) continue;
-        
-        //If we are starting at the first point of the line,
-        //Begin a new path.
-        if(line.drawPointer == 0) {
+    //If there are no lines, or the last line is fully drawn (implies all lines are drawn) return.
+    while(doRender){
+        if(lines[linePointer].hasNext && lines[linePointer].drawPointer == 0){ 
             ctx.beginPath();
-            ctx.lineWidth = line.width;
-            ctx.strokeStyle = line.color;
+            ctx.lineWidth = lines[linePointer].width;
+            ctx.strokeStyle = lines[linePointer].color;
             ctx.lineCap = "round";
             //Set the starting point for the line.
-            ctx.moveTo(line.points[0].x, line.points[0].y);
+            point = lines[linePointer].next();
+            ctx.moveTo(point.x, point.y);
         }
-    
-        //Draw the line
-        while(line.drawPointer < lineLength - 1){ //While there are points to draw...
-            ctx.lineTo(line.points[0].x, line.points[0].y);
+
+        while(lines[linePointer].hasNext){
+            point = lines[linePointer].next();
+            ctx.lineTo(point.x, point.y);
             ctx.stroke();
-            line.drawPointer++;
         }
-        //Only increment the linePointer if it is NOT the last line.
-        if(linePointer < lines.length - 1) linePointer++;
+
+         //If this line is finished being drawn by the user, 
+        //then all of the points have been drawn for it.
+        if(lines[linePointer].finished) {
+            linePointer++;
+            //If there are no more lines to process, stop rendering.
+            if(linePointer == lines.length) doRender = false;
+        }
+        //If the line is not finished being drawn
+        //And there is no next point, stop trying to render.
+        else if(!lines[linePointer].hasNext) doRender = false;
     }
 }
 
 function drawPoint(pos){
-    if(ctx.lineWidth != lineWidth || ctx.strokeStyle != lineColor) 
-        //Lines cannot have different widths/colors,
-        //So anytime those change we need to make a new line.
-        touchEnd();
-
     //Push the point back to the most recent line.
-    lines[lines.length - 1].push(pos);
+    let copy = lines[lines.length - 1].push(pos);
+    if(!copy) doRender = true;
+    if(renderInterval == null) renderInterval = setInterval(render, 15);
 }
 
 let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
@@ -74,14 +70,18 @@ function changePenWidth(diff){
     else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
 
     lineWidth = newWidth;
+    touchEnd();
 }
 
 function changeColor(){
     lineColor = getRandomColor();
+    touchEnd();
 }
 
 function touchEnd(){
+    if(lines.length > 0) lines[lines.length - 1].finished = true;
     lines.push(new Line(lineColor, lineWidth));
+    doRender = true;
 }
 
 //Stolen from: https://stackoverflow.com/a/1484514    
