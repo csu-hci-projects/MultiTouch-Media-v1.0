@@ -8,11 +8,6 @@ function closeMenu(){
 
 }
 
-
-function setColor(cellColor){
-    color = cellColor;
-}
-
 function increaseSize(){
     changePenWidth(1)
 }

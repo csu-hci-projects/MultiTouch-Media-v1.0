@@ -22,7 +22,7 @@ function main(req, res){
     if(req.param('notouch') === '') doTouch = false; 
 
     //for now, set this to your UI 8-)
-    let menu = "radial"
+    let menu = "basic"
     if(req.param('dial') === '') menu = 'dial'; 
     else if(req.param('basic') === '') menu = 'basic';
     else if(req.param('radial') === '') menu = 'radial';
