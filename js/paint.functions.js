@@ -1,3 +1,8 @@
+$(document).ready(function(){
+    $("div#tools img#trash").on('mousedown', resetPainting);    
+    $("div#tools img#undo").on('mousedown', undo);
+    $("div#tools img#eraser").on('mousedown', modeToggle);
+});
 //Change the pen width by an ammount.
 function changePenWidth(diff){
     let newWidth = lineWidth + (diff);
@@ -58,4 +63,24 @@ function undo(){
     lines.map(line => {
         line.reset();
     });
+}
+
+ //Sets the 'edit mode' to be erase
+//(really just changes the line color ;))
+function useEraser(){
+    isErasing = true;
+    $("img#eraser").attr('src', "../images/brush.png");
+}
+
+ //Sets the 'edit mode' to be draw
+//(really just changes the line color ;))
+function usePen(){
+    isErasing = false;
+    $("img#eraser").attr('src', "../images/eraser.png");
+}
+
+//Toggle the eraser on and off with a single method! wow!
+function modeToggle(){
+    if(isErasing) usePen();
+    else useEraser();
 }

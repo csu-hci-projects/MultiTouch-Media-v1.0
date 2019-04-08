@@ -1,7 +1,8 @@
 #basic{
 
     position: absolute;
-    width: 10%; height: 100%;
+    top: 0; left: 0;
+    width: 250px; height: 100%;
     padding: 0; margin: 0;
     border: 2px solid black;
     z-index: 10;
@@ -38,7 +39,7 @@
 
 #basic #tools #lineStyle{
     position: absolute;
-    top:35%;
+    top: 400px;
     left:5%;
     width: 50px;
     height: 50px;
@@ -46,7 +47,7 @@
 
 #basic #increaseSize{
     position: absolute;
-    top: 42%;
+    top: 450px;
     left: 5%;
     width:40%;
     height: 5%;
@@ -54,7 +55,7 @@
 
 #basic #decreaseSize{
     position: absolute;
-    top: 42%;
+    top: 450px;
     left: 50%;
     width:40%;
     height: 5%;
@@ -62,14 +63,14 @@
 
 #basic #tools #undo{
     position: absolute;
-    top:50%;
+    top: 55%;
     left:5%;
     width: 50px;
     height: 50px;
 }
 #basic #tools #eraser{
     position: absolute;
-    top:50%;
+    top: 55%;
     left:50%;
     width: 50px;
     height: 50px;

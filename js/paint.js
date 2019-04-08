@@ -1,6 +1,7 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let canvas, ctx, lineColor, lineWidth = 1, lines = [];
+let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", eraserWidth = 25, lineWidth = 1, lines = [];
+let isErasing = false;
 let renderInterval = null;
 function Paint_onLoad(){
     canvas = document.getElementById("paint");
@@ -67,7 +68,10 @@ function render(){
 
 function drawPoint(pos){
     //If the last line to be drawn is finished, make a new line to draw.
-    if(lines.length == 0 || lines[lines.length - 1].finished == true) lines.push(new Line(lineColor, lineWidth));
+    if(lines.length == 0 || lines[lines.length - 1].finished == true) {
+        if(isErasing) lines.push(new Line(eraserWidth, canvasColor));
+        else          lines.push(new Line(lineWidth, lineColor));
+    }
     //Push the point back to the most recent line.
     let copy = lines[lines.length - 1].push(pos);
     if(!copy) doRender = true;
