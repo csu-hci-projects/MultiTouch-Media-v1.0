@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    $("div#tools img#trash").on('mousedown', resetPainting);    
-    $("div#tools img#undo").on('mousedown', undo);
-    $("div#tools img#eraser").on('mousedown', modeToggle);
+    $("div#tools img#trash").on('mousedown', () => resetPainting());    
+    $("div#tools img#undo").on('mousedown', () => undo());
+    $("div#tools img#eraser").on('mousedown', () => modeToggle());
 });
 //Change the pen width by an ammount.
 function changePenWidth(diff){
@@ -36,19 +36,21 @@ function setRandomColor(){
 }
 
 //Delete the whole painting
-function resetPainting(undo=false){
+function resetPainting(isUndo=false){
     //Delete the lines we kept record of.
-    if(!undo) lines = [];
+    if(!isUndo) lines = [];
     //Reset which line the render function is on.
     linePointer = 0;
     //Clear the canvas itself.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //Reset the color
-    if(!undo) lineColor = "#000000";
+    //Reset the color, or naw
+    //if(!undo) lineColor = "#000000";
     //Reset the width
     lineWidth = 1;
     //Put the logo back on the canvas
     addLogoToCanvas();
+
+    console.log(lines.length + " | " + isUndo)
 }
 
 //Delete the last line drawn to the painting
