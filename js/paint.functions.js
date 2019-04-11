@@ -49,8 +49,6 @@ function resetPainting(isUndo=false){
     lineWidth = 1;
     //Put the logo back on the canvas
     addLogoToCanvas();
-
-    console.log(lines.length + " | " + isUndo)
 }
 
 //Delete the last line drawn to the painting
