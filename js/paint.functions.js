@@ -3,7 +3,6 @@ $(document).ready(function(){
     $("div#tools img#undo").on('mousedown', () => undo());
     $("div#tools img#eraser").on('mousedown', () => modeToggle());
     $("div#tools img#upload").click(() => getImage());
-    $("div#dial img").on('mousedown', () => readURL());
 });
 
 function getImage(){

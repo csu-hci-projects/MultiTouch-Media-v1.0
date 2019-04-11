@@ -1,7 +1,11 @@
 link(href='../css/radial.css', rel='stylesheet')
 script(src='../js/radial.js')
+
+input(type = 'file', id = 'imgUpload', name = 'backgroundImage' style = 'display:none')
+div(id='background')
+
 div#radial
-    img(src='../images/1x1.png')
+    img(src='../images/1x1.png', onclick="readURL()")
     div#tools 
         img#palette(src="../images/palette.png")
         img#undo(src="../images/undo.png")
