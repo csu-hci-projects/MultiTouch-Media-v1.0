@@ -1,13 +1,15 @@
 link(href='../css/basic.css', rel = 'stylesheet')
 script(src='../js/basic.js')
 
+input(type = 'file', id = 'imgUpload', name = 'backgroundImage' style = 'display:none')
+div(id='background')
 
 div#basic
     div#tools
         img#palette(src="../images/palette.png")
         img#undo(src="../images/undo.png")
         img#trash(src="../images/trash.png")
-        img#upload(src="../images/upload.png")
+        img#upload(src="../images/upload.png", onclick="readURL()")
         img#save(src="../images/floppy.png")
         img#lineStyle(src="../images/gear.png")
         img#eraser(src="../images/eraser.png")

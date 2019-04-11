@@ -5,11 +5,12 @@ let circleRadius = 100,
     combinedRadius = circleRadius + toolSpace,
     fullRadius = combinedRadius + toolRadius,
     deg2rad = Math.PI / 180.0;
-let menuOpen = false;
+    menuOpen = false;
+
 function initMenu(){
-    var element = document.getElementById('dial');
-    var options = {debug: false, touchMode: 'knob', wheelSize: '100%', knobSize: '30%', minDegree: null, maxDegree: null};
-    var dial = JogDial(element, options);
+    // var element = document.getElementById('dial');
+    // var options = {debug: false, touchMode: 'knob', wheelSize: '100%', knobSize: '30%', minDegree: null, maxDegree: null};
+    // var dial = JogDial(element, options);
 
     // dial.on("mousemove", function(event){alert('you\'ve moved it') });
 
@@ -17,10 +18,7 @@ function initMenu(){
     setToolPositions();
     setToolAttributes();
 
-
-    $("#dial > img").on('mousedown', function(e){
-        canvasMouseDown(e);
-    });
+    $("#dial > img").on('mousedown', canvasMouseDown);
 }
 
 function openMenu(center){
