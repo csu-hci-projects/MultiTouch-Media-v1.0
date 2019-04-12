@@ -8,8 +8,15 @@ div#widthWrapper {
 div#settings {
     width: 250px;
     position: relative;
-    top: 3px;
+    top: 12px;
 }
+
+div#previewWrapper {
+    background-color: white;
+    border-radius: 25%;
+    margin-left: 15px;
+}
+
 div#settings, div#previewWrapper {
     display: inline-block;
 }

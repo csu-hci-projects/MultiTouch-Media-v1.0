@@ -5,8 +5,9 @@ function initLineWidth(){
     previewX = 42.5;
     previewY = 42.5; 
     
+    $("div#widthwrapper").on("mousedown touchstart", e => e.stopPropagation());
     $("div#slider input[type=range]").on('input', updateLineWidth);
-    $("div#widthWrapper div#buttons button").on("mousedown touchstart", updateLineWidth);
+    $("div#widthwrapper div#buttons button").on("mousedown touchstart", updateLineWidth);
     
     setPenWidthByPercent(50);
     updatePreview();
