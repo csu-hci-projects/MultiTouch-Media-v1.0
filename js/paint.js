@@ -1,6 +1,8 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", eraserWidth = 25, lineWidth = 1, lines = [];
+let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 48;
+let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", 
+    eraserWidth = 26, lineWidth = MIN_PEN_WIDTH, lines = [];
 let isErasing = false;
 let renderInterval = null;
 function Paint_onLoad(){

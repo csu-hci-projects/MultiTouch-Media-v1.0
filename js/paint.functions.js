@@ -10,16 +10,22 @@ function changePenWidth(diff){
 }
 
 //Set the pen width to a (clamped) amount.
-let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
+//for reference: MIN_PEN_WIDTH = 4, MAX_PEN_WIDTH = 40;
 function setPenWidth(newWidth){
     //Ensure width is no smaller than the min we set.
     if(newWidth < MIN_PEN_WIDTH) newWidth = MIN_PEN_WIDTH;
     //Ensure width is no larger than the max we set.
-    else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
+    else if(newWidth > PEN_WIDTH_RANGE + MIN_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
     //Set the new line width.
-    lineWidth = newWidth; 
+    if(isErasing) eraserWidth = newWidth;
+    else          lineWidth = newWidth; 
     //Inform paint.js that the last line is finished (due to the width change). 
     touchEnd();
+}
+
+function setPenWidthByPercent(percent){
+    if(percent > 100 || percent < 0) throw "Percent value was out of range.";
+    setPenWidth((PEN_WIDTH_RANGE * (percent / 100)) + MIN_PEN_WIDTH)
 }
 
 //Set the pen color to a specific color.
@@ -83,4 +89,12 @@ function usePen(){
 function modeToggle(){
     if(isErasing) usePen();
     else useEraser();
+
+    //Update the preview window for the line width selector
+    updatePreview();
+}
+
+function getCurrentLineWidth(){
+    if(isErasing) return eraserWidth;
+    else          return lineWidth;
 }
