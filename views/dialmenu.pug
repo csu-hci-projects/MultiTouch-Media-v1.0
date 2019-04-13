@@ -1,8 +1,12 @@
 link(href='../css/dial.css', rel='stylesheet')
 script(src='../js/lib/jogDial.js')
 script(src='../js/dial.js')
+
+input(type = 'file', id = 'imgUpload', name = 'backgroundImage' style = 'display:none')
+div(id='background')
+
 div#dial.menu
-    img(src='../images/led-circle-grey.png')
+    img(src='../images/led-circle-grey.png', onclick="readURL()")
     div#tools
         img#palette(src="../images/palette.png")
         img#undo(src="../images/undo.png")
@@ -11,6 +15,3 @@ div#dial.menu
         img#save(src="../images/floppy.png")
         img#lineStyle(src="../images/gear.png")
         img#eraser(src="../images/eraser.png")
-
-//- Remember that the tools start at #palette at  90deg, and end with #eraser at 60deg with 360 menu.
-

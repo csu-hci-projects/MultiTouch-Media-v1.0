@@ -1,8 +1,26 @@
 $(document).ready(function(){
-    $("div#tools img#trash").on('mousedown touchstart', () => resetPainting());    
+    $("div#tools img#trash").on('mousedown touchstart', () => resetPainting());
     $("div#tools img#undo").on('mousedown touchstart', () => undo());
     $("div#tools img#eraser").on('mousedown touchstart', () => modeToggle());
+    $("div#tools img#upload").on('mousedown touchstart', () => getImage());
 });
+
+function getImage(){
+    $('#imgUpload').trigger('click');
+}
+
+function readURL(){
+    var file = document.getElementById("imgUpload").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function(){
+        document.getElementById('background').style.backgroundImage = "url(" + reader.result + ")";
+    }
+
+    if(file){
+        reader.readAsDataURL(file);
+    } else {}
+}
+
 //Change the pen width by an ammount.
 function changePenWidth(diff){
     let newWidth = lineWidth + (diff);
