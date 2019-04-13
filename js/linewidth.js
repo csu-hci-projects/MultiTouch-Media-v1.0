@@ -31,5 +31,4 @@ function updatePreview(){
     isErasing ? lineWidthCTX.stroke() : lineWidthCTX.fill();
 }
 
-
 $(document).ready(initLineWidth);

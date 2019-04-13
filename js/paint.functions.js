@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    $("div#tools img#trash").on('mousedown', () => resetPainting());    
-    $("div#tools img#undo").on('mousedown', () => undo());
-    $("div#tools img#eraser").on('mousedown', () => modeToggle());
+    $("div#tools img#trash").on('mousedown touchstart', () => resetPainting());    
+    $("div#tools img#undo").on('mousedown touchstart', () => undo());
+    $("div#tools img#eraser").on('mousedown touchstart', () => modeToggle());
 });
 //Change the pen width by an ammount.
 function changePenWidth(diff){
@@ -94,7 +94,43 @@ function modeToggle(){
     updatePreview();
 }
 
+//Get the line width for this draw mode.
 function getCurrentLineWidth(){
     if(isErasing) return eraserWidth;
     else          return lineWidth;
+}
+
+//Opens the linewidth submenu next to the linestyle image.
+function handleLineStyleSelect(){
+    if(!isLineWidthOpen){
+        let where = $("img#lineStyle").offset();
+        where.left += 60;
+        openLineWidthMenu(where);
+        //If the menu would end up off screen, shift the whole ui over to accommodate.
+        let diffX = $(window).width() - (where.left + $("div#widthwrapper").width() + 25)
+        if(diffX < 0) {
+            $(".menu").animate({left: "+=" + diffX}, 25);
+            $("div#widthwrapper").animate({left: "+=" + diffX}, 25);
+        }
+    } else {
+        closeLineWidthMenu();
+    }
+}
+
+let isLineWidthOpen = false;
+function openLineWidthMenu(where){ 
+    $("div#widthwrapper").css({top: where.top, left: where.left, opacity: 0});
+    $("div#widthwrapper").animate({opacity: 1}, 25);
+    isLineWidthOpen = true;
+}
+
+function closeLineWidthMenu(){
+    $("div#widthwrapper").animate({opacity: 0}, 15, function(){ 
+        $("div#widthwrapper").css({top: -9999, left: -9999});
+    });
+    isLineWidthOpen = false
+}
+
+function closeSubMenus(){
+    closeLineWidthMenu();
 }

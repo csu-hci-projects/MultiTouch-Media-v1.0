@@ -12,9 +12,11 @@ function initMenu(){
     setToolPositions();
 
     $("#radial > img").on('mousedown', canvasMouseDown);
+    $("div#tools img#lineStyle").on('mousedown touchstart', () => handleLineStyleSelect());
 }
 
 function openMenu(center){
+    if(menuOpen) closeSubMenus();
     touchEnd();
     let wDiff = window.innerWidth - (center.x + fullRadius);
     let wZero = center.x - fullRadius;
@@ -32,6 +34,7 @@ function openMenu(center){
 }
 
 function closeMenu(now=false){ 
+    closeSubMenus();
     menuOpen = false
     //if(now) {
     //   $("#radial").css({opacity: 0,top: -9999,left: -9999});
