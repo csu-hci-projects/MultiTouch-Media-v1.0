@@ -1,0 +1,13 @@
+link(href="../css/range.css", rel='stylesheet')
+link(href="../css/linewidth.css", rel='stylesheet')
+script(src="../js/linewidth.js")
+div#widthWrapper
+    div#settings
+        div#slider
+            input(type="range", name="size")
+        div#buttons
+            button(value="0") Small
+            button#middle(value="50") Medium 
+            button(value="100") Large
+    div#previewWrapper
+        canvas#preview(width="85", height="85")

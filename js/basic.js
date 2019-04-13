@@ -1,5 +1,4 @@
 let menuOpen=true;
-
 function openMenu(){
 
 }
@@ -8,10 +7,8 @@ function closeMenu(){
 
 }
 
-function increaseSize(){
-    changePenWidth(1)
+function initBasicMenu(){
+    openLineWidthMenu({top: 320, left: 5});
 }
 
-function decreaseSize(){
-    changePenWidth(-1)
-}
+$(document).ready(initBasicMenu);

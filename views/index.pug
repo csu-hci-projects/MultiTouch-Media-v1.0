@@ -7,7 +7,8 @@ html
         div#sliderContainer
             label.switch(for="touchToggle")
                 input#touchToggle(type="checkbox" checked=touch)
-                span.slider.round
+                span.slider.round 
+        include linewidth.pug 
         div#canvasWrapper
             canvas#paint
         if menu == "radial"

@@ -1,0 +1,57 @@
+div#widthWrapper {
+    position: absolute;
+    z-index: 11; /* one more than the basic ui :) */
+    top: -9999px;
+    left: -9999px;
+    opacity: 0;
+    height: 85px;
+    padding: 5px;
+    padding-bottom: 34px;
+    background-color: rgba(100, 153, 200, .8);
+    border: 2px solid #d3d3d3;
+    border-radius: 24px;
+    white-space: nowrap;
+}
+div#settings {
+    width: 250px;
+    position: relative;
+    top: 12px;
+}
+
+div#previewWrapper {
+    background-color: white;
+    border-radius: 25%;
+    margin-left: 15px;
+}
+
+div#settings, div#previewWrapper {
+    display: inline-block;
+}
+
+div#widthWrapper div#settings {
+    
+}
+div#widthWrapper div#settings div {
+    height: 42.5px;
+} 
+
+div#widthWrapper div#settings div#buttons {
+    margin-top: 5px;
+}
+div#widthWrapper div#settings div#buttons button#middle {
+    width: 29%;
+    margin: 0% 2%;
+}
+div#widthWrapper div#settings div#buttons button {
+    display: inline-block;
+    width: 33%;
+    border: 2px solid white;
+    background: #88c3ff;
+    border-radius: 7.5px;
+    text-align: center;
+    height: 30px;
+    color: white;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}

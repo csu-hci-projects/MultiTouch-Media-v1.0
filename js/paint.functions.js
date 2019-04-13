@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    $("div#tools img#trash").on('mousedown', () => resetPainting());
-    $("div#tools img#undo").on('mousedown', () => undo());
-    $("div#tools img#eraser").on('mousedown', () => modeToggle());
-    $("div#tools img#upload").click(() => getImage());
+    $("div#tools img#trash").on('mousedown touchstart', () => resetPainting());
+    $("div#tools img#undo").on('mousedown touchstart', () => undo());
+    $("div#tools img#eraser").on('mousedown touchstart', () => modeToggle());
+    $("div#tools img#upload").on('mousedown touchstart', () => getImage());
 });
 
 function getImage(){
@@ -28,16 +28,22 @@ function changePenWidth(diff){
 }
 
 //Set the pen width to a (clamped) amount.
-let MIN_PEN_WIDTH = 1, MAX_PEN_WIDTH = 18;
+//for reference: MIN_PEN_WIDTH = 4, MAX_PEN_WIDTH = 40;
 function setPenWidth(newWidth){
     //Ensure width is no smaller than the min we set.
     if(newWidth < MIN_PEN_WIDTH) newWidth = MIN_PEN_WIDTH;
     //Ensure width is no larger than the max we set.
-    else if(newWidth > MAX_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
+    else if(newWidth > PEN_WIDTH_RANGE + MIN_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
     //Set the new line width.
-    lineWidth = newWidth; 
+    if(isErasing) eraserWidth = newWidth;
+    else          lineWidth = newWidth; 
     //Inform paint.js that the last line is finished (due to the width change). 
     touchEnd();
+}
+
+function setPenWidthByPercent(percent){
+    if(percent > 100 || percent < 0) throw "Percent value was out of range.";
+    setPenWidth((PEN_WIDTH_RANGE * (percent / 100)) + MIN_PEN_WIDTH)
 }
 
 //Set the pen color to a specific color.
@@ -101,4 +107,48 @@ function usePen(){
 function modeToggle(){
     if(isErasing) usePen();
     else useEraser();
+
+    //Update the preview window for the line width selector
+    updatePreview();
+}
+
+//Get the line width for this draw mode.
+function getCurrentLineWidth(){
+    if(isErasing) return eraserWidth;
+    else          return lineWidth;
+}
+
+//Opens the linewidth submenu next to the linestyle image.
+function handleLineStyleSelect(){
+    if(!isLineWidthOpen){
+        let where = $("img#lineStyle").offset();
+        where.left += 60;
+        openLineWidthMenu(where);
+        //If the menu would end up off screen, shift the whole ui over to accommodate.
+        let diffX = $(window).width() - (where.left + $("div#widthwrapper").width() + 25)
+        if(diffX < 0) {
+            $(".menu").animate({left: "+=" + diffX}, 25);
+            $("div#widthwrapper").animate({left: "+=" + diffX}, 25);
+        }
+    } else {
+        closeLineWidthMenu();
+    }
+}
+
+let isLineWidthOpen = false;
+function openLineWidthMenu(where){ 
+    $("div#widthwrapper").css({top: where.top, left: where.left, opacity: 0});
+    $("div#widthwrapper").animate({opacity: 1}, 25);
+    isLineWidthOpen = true;
+}
+
+function closeLineWidthMenu(){
+    $("div#widthwrapper").animate({opacity: 0}, 15, function(){ 
+        $("div#widthwrapper").css({top: -9999, left: -9999});
+    });
+    isLineWidthOpen = false
+}
+
+function closeSubMenus(){
+    closeLineWidthMenu();
 }

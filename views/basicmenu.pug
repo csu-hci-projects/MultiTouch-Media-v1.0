@@ -6,12 +6,10 @@ div(id='background')
 
 div#basic
     div#tools
-        img#palette(src="../images/palette.png")
         img#undo(src="../images/undo.png")
         img#trash(src="../images/trash.png")
         img#upload(src="../images/upload.png", onclick="readURL()")
         img#save(src="../images/floppy.png")
-        img#lineStyle(src="../images/gear.png")
         img#eraser(src="../images/eraser.png")
     table#colorSelector
        tr
@@ -20,7 +18,6 @@ div#basic
             td#Teal(style = "background-color: #469990", onclick='setColor("#469990")')
             td#Navy(style = "background-color: #000075", onclick='setColor("#000075")')
             td#Black(style = "background-color: #000000", onclick='setColor("#000000")')
-       tr
             td#Red(style = "background-color: #e6194B", onclick='setColor("#e6194B")')
             td#Orange(style = "background-color: #f58231", onclick='setColor("#f58231")')
             td#Yellow(style = "background-color: #ffe119", onclick='setColor("#ffe119")')
@@ -32,13 +29,8 @@ div#basic
             td#Purple(style = "background-color: #911eb4", onclick='setColor("#911eb4")')
             td#Magenta(style = "background-color: #f032e6", onclick='setColor("#f032e6")')
             td#Grey(style = "background-color: #a9a9a9", onclick='setColor("#a9a9a9")')
-       tr
             td#Pink(style = "background-color: #fabebe", onclick='setColor("#fabebe")')
             td#Apricot(style = "background-color: #ffd8b1", onclick='setColor("#ffd8b1")')
             td#Beige(style = "background-color: #fffac8", onclick='setColor("#fffac8")')
             td#Mint(style = "background-color: #aaffc3", onclick='setColor("#aaffc3")')
             td#White(style = "background-color: #ffffff", onclick='setColor("#ffffff")')
-    button#increaseSize(onclick= 'increaseSize()')
-        name='Increase'
-    button#decreaseSize(onclick= 'decreaseSize()')
-        name='Decrease'
