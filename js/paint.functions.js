@@ -54,23 +54,14 @@ function setColor(colorHex){
     touchEnd();
 }
 
-//Set the pen color to a random color.
-function setRandomColor(){
-    setColor(getRandomColor());
-}
-
 //Delete the whole painting
 function resetPainting(isUndo=false){
     //Delete the lines we kept record of.
     if(!isUndo) lines = [];
     //Reset which line the render function is on.
-    linePointer = 0;
+    lastFinsihedLine = 0;
     //Clear the canvas itself.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //Reset the color, or naw
-    //if(!undo) lineColor = "#000000";
-    //Reset the width
-    lineWidth = 1;
     //Put the logo back on the canvas
     addLogoToCanvas();
 }
@@ -124,11 +115,12 @@ function handleLineStyleSelect(){
         let where = $("img#lineStyle").offset();
         where.left += 60;
         openLineWidthMenu(where);
-        //If the menu would end up off screen, shift the whole ui over to accommodate.
         let diffX = $(window).width() - (where.left + $("div#widthwrapper").width() + 25)
+        //If the menu would end up off screen, 
+        //quickly shift the whole ui over to accommodate.
         if(diffX < 0) {
-            $(".menu").animate({left: "+=" + diffX}, 25);
-            $("div#widthwrapper").animate({left: "+=" + diffX}, 25);
+            $(".menu").animate({left: "+=" + diffX}, 15);
+            $("div#widthwrapper").animate({left: "+=" + diffX}, 15);
         }
     } else {
         closeLineWidthMenu();
