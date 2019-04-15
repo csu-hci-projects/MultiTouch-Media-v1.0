@@ -56,11 +56,10 @@ function render(){
             linePointer = 0;
         } else {
             if(!lines[linePointer].hasNext){      
-                if(lines[linePointer].finished)      
-                    lastFinishedLine++;
+                //if(lines[linePointer].finished)      
+                //    lastFinishedLine++;
                 linePointer++;
             }
-
             if(lastFinishedLine == lines.length) 
                 doRender = false;
         }
