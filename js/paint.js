@@ -27,16 +27,13 @@ function Paint_onResize(){
 
 let linePointer = 0, lastFinishedLine = 0, doRender = true, point = null, line = null;
 function render(){
-    if(doRender) linePointer = lastFinishedLine;
+    linePointer = lastFinishedLine;
     while(doRender && linePointer < lines.length){
         //If the line's first point must be drawn...
-        if(lines[linePointer].drawPointer == 0){
+        if(lines[linePointer].drawPointer == 0 && lines[linePointer].hasNext){
             //there is only one point in this line...
             if(lines[linePointer].points.length == 1) {
-                 //If the line is done being drawn,
-                //Draw a point on the canvas
-                if(lines[linePointer].finished) setupLine(true);
-                //Oherwise skip this line for now.
+                if(!lines[linePointer].finished) setupLine(true);
                 else { linePointer++; continue; }
             } 
             else if(lines[linePointer].points.length > 1) 
@@ -52,17 +49,21 @@ function render(){
             //Draw the results
             ctx.stroke();
         }
-        
-         //If the current line is done being drawn by the painter, 
-        //skip it on the next render call.
-        if(lines[linePointer].finished) lastFinishedLine++;  
 
-        //If the last line is finished,
-        //OR we are on the last line and it has no more points to draw,
-        //stop rendering.
-        if(lastFinishedLine == lines.length - 1 || 
-          (linePointer == lines.length - 1 && !lines[linePointer].hasNext))
-            doRender = false; 
+        if(lines.length == 0){
+            doRender = false;
+            lastFinishedLine = 0;
+            linePointer = 0;
+        } else {
+            if(!lines[linePointer].hasNext){      
+                if(lines[linePointer].finished)      
+                    lastFinishedLine++;
+                linePointer++;
+            }
+
+            if(lastFinishedLine == lines.length) 
+                doRender = false;
+        }
     }
 }
 //Setup the canvas to be ready for the next line to be drawn.
@@ -76,17 +77,15 @@ function setupLine(isPoint=false){
     ctx.strokeStyle = lines[linePointer].color;
     ctx.fillStyle = lines[linePointer].color;
     //get the starting point for the line.
-    point = lines[linePointer].next();
-    //This not a point, so setup for a line
-    if(!isPoint){        
-        //Move the canvas 'pen' to the first point.
-        ctx.moveTo(point.x, point.y); 
-        ctx.lineWidth = lines[linePointer].width;
-    }
-    //Otherwise draw a circle
-    else{
+    point = isPoint ? lines[linePointer].points[lines[linePointer].points.length - 1] 
+                    : lines[linePointer].next();
+    if(isPoint){
         ctx.arc(point.x, point.y, lines[linePointer].width/2, 0, 2 * Math.PI);
         ctx.fill();
+        setupLine();
+    } else {
+        ctx.moveTo(point.x, point.y); 
+        ctx.lineWidth = lines[linePointer].width;
     }
 }
 function drawPoint(pos){

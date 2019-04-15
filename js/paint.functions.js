@@ -52,18 +52,20 @@ function setColor(colorHex){
     lineColor = colorHex;
     //Inform paint.js that the last line is finished (due to the color change). 
     touchEnd();
+    updatePreview();
 }
 
 //Delete the whole painting
 function resetPainting(isUndo=false){
     //Delete the lines we kept record of.
     if(!isUndo) lines = [];
-    //Reset which line the render function is on.
-    lastFinsihedLine = 0;
     //Clear the canvas itself.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Put the logo back on the canvas
     addLogoToCanvas();
+    //Reset which line the render function is on.
+    linePointer = 0;
+    lastFinishedLine = 0;
 }
 
 //Delete the last line drawn to the painting
@@ -75,9 +77,7 @@ function undo(){
     //We have to re-render everything.
     doRender = true;
     //Reset each lines iterator variables.
-    lines.map(line => {
-        line.reset();
-    });
+    lines.map(line => line.reset());
 }
 
  //Sets the 'edit mode' to be erase
@@ -119,8 +119,8 @@ function handleLineStyleSelect(){
         //If the menu would end up off screen, 
         //quickly shift the whole ui over to accommodate.
         if(diffX < 0) {
-            $(".menu").animate({left: "+=" + diffX}, 15);
-            $("div#widthwrapper").animate({left: "+=" + diffX}, 15);
+            $(".menu").animate({left: "+=" + diffX}, 25);
+            $("div#widthwrapper").animate({left: "+=" + diffX}, 25);
         }
     } else {
         closeLineWidthMenu();
