@@ -35,8 +35,7 @@ function setPenWidth(newWidth){
     //Ensure width is no larger than the max we set.
     else if(newWidth > PEN_WIDTH_RANGE + MIN_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
     //Set the new line width.
-    if(isErasing) eraserWidth = newWidth;
-    else          lineWidth = newWidth; 
+    lineWidth = newWidth; 
 }
 
 function setPenWidthByPercent(percent){

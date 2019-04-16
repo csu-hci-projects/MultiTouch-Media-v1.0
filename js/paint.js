@@ -2,7 +2,7 @@
 //https://www.w3schools.com/tags/ref_canvas.asp
 let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 60;
 let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", 
-    eraserWidth = 26, lineWidth = MIN_PEN_WIDTH, lines = [];
+    lineWidth = MIN_PEN_WIDTH, lines = [];
 let isErasing = false;
 let renderInterval = null;
 function Paint_onLoad(){
@@ -73,10 +73,12 @@ function setupLine(index, isPoint=false){
         ctx.lineWidth = lines[index].width;
     }
 }
+
+//Hooked up to mouse events and still works it seems
 function drawPoint(pos){
     //If the last line to be drawn is finished, make a new line to draw.
     if(lines.length == 0 || lines[lines.length - 1].finished == true) {
-        if(isErasing) lines.push(new Line(eraserWidth, canvasColor));
+        if(isErasing) lines.push(new Line(lineWidth, canvasColor));
         else          lines.push(new Line(lineWidth, lineColor));
     }
     //Push the point back to the most recent line.
