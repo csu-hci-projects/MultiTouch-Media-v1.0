@@ -59,7 +59,11 @@ function setColor(colorHex){
 //Delete the whole painting
 function resetPainting(isUndo=false){
     //Delete the lines we kept record of.
-    if(!isUndo) lines = [];
+    if(!isUndo) { 
+        if(!canTouch) return;
+        else startTouchButtonTimeout(); 
+        lines = [];
+    }
     //Clear the canvas itself.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Put the logo back on the canvas
@@ -67,7 +71,9 @@ function resetPainting(isUndo=false){
 }
 
 //Delete the last line drawn to the painting
-function undo(){ 
+function undo(){  
+    if(!canTouch) return;
+    else startTouchButtonTimeout();
     //Cut off the last line to be drawn
     lines = lines.slice(0, -1);
     //Reset the painting, but with special conditions.
@@ -92,6 +98,9 @@ function usePen(){
 
 //Toggle the eraser on and off with a single method! wow!
 function modeToggle(){
+    if(!canTouch) return;
+    else startTouchButtonTimeout();
+    
     if(isErasing) usePen();
     else useEraser();
 

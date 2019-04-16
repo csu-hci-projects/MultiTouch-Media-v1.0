@@ -17,6 +17,7 @@ function initMenu(){
 
 function openMenu(center){
     if(menuOpen) closeSubMenus();
+ 
     let wDiff = window.innerWidth - (center.x + fullRadius);
     let wZero = center.x - fullRadius;
     if(wDiff < 0) center.x += wDiff;
@@ -39,7 +40,7 @@ function closeMenu(now=false){
     //   $("#radial").css({opacity: 0,top: -9999,left: -9999});
     //}
     //else {
-        $("#radial").animate({opacity: 0}, 100, function(){
+        $("#radial").stop().animate({opacity: 0}, 100, function(){
             $("#radial").css({top: -9999, left: -9999});
         });
     //}

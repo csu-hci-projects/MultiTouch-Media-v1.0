@@ -25,33 +25,44 @@ $(document).ready(function(){
         if((angle > 150 && angle < 210) || (angle < 30 && angle > 330)) changeColor();
     }
     function handlePinch(e){
-        
+        openMenu(e.detail.center);    
     }
     function handleRotate(e){
     
     }
 
     function handleTouchStart(e){
-        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
-            let touch = e.originalEvent.changedTouches[i];
+        if(menuOpen) closeMenu(true)     
+        //console.log("start");
+        //console.log(e.originalEvent.changedTouches);
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
             let pos = {x: touch.pageX, y: touch.pageY};
             addLine(pos, touch.identifier);    
         }        
     }
 
     function handleTouchMove(e){ 
-        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
-            let touch = e.originalEvent.changedTouches[i];
+        //  console.log("move");
+        //console.log(e.originalEvent.changedTouches);
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
             let pos = {x: touch.pageX, y: touch.pageY};
             addToLine(pos, touch.identifier);    
         }        
     }
 
     function handleTouchEnd(e){ 
-        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
-            let touch = e.originalEvent.changedTouches[i];
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
             let pos = {x: touch.pageX, y: touch.pageY};
             finishLine(pos, touch.identifier);    
         }        
     }
 });
+
+let canTouch = true;
+function startTouchButtonTimeout(){
+    canTouch = false;
+    setTimeout(() => { canTouch = true; }, 125);
+}

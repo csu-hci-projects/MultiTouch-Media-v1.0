@@ -32,9 +32,10 @@ function render(){
         if(lines[i].finshed && !lines[i].hasNext) continue;
 
         //If this is the first point to be drawn for this line
-        if(lines[i].drawPointer == 0 && lines[i].hasNext){
-            if(lines[i].points.length == 1)     setupPoint(i);
-            else if(lines[i].points.length > 1) setupLine(i);     
+        if(lines[i].hasNext){
+            if(lines[i].drawPointer == 0 
+            && lines[i].points.length == 1) setupPoint(i);
+            else setupLine(i);
         }
 
         while(lines[i].hasNext){
@@ -69,8 +70,12 @@ function setupLine(index, isPoint=false){
         //Resets the settings for this line
         setupLine(index);
     } else {
-        ctx.moveTo(point.x, point.y); 
+        let initialPoint = Object.assign({}, lines[index].points[lines[index].drawPointer - 2]);
         ctx.lineWidth = lines[index].width;
+        ctx.moveTo(initialPoint.x, initialPoint.y); 
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+
     }
 }
 
@@ -87,6 +92,7 @@ function drawPoint(pos){
 }
 
 function addLine(pos, fid){ 
+    if(menuOpen) closeMenu();
     //Make a new line
     let l = new Line(lineWidth, isErasing ? canvasColor : lineColor, fid)
     //Put the point on the line
@@ -117,6 +123,7 @@ function finishLine(pos, fid){
     let i = getLine(fid);
     if(isValidLine(i)) lines[i].finished = true;
     else throw "Could not find line with fid: " + fid;
+//    lines.map(line => line.reset());
     //console.log("Finished line: " + i + " | fid: " + fid);
 }
 
