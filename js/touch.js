@@ -7,30 +7,62 @@ $(document).ready(function(){
 
     //https://github.com/zingchart/zingtouch#getting-started
     zt.unbind(canvas);
-    zt.bind(canvas, TwoFingerSwipe, handleSwipe);//Handle a two finger swipe
+    //zt.bind(canvas, TwoFingerSwipe, handleSwipe);//Handle a two finger swipe
     zt.bind(canvas, 'distance', handlePinch);   //Two fingers for pinch zoom
     zt.bind(canvas, 'rotate', handleRotate);   //One or two fingers moving about a radius.  
     
     var $canvas = $("canvas#paint");
-    $canvas.on('touchstart', handleDraw);
-    $canvas.on('touchmove', handleDraw);
-    $canvas.on('touchend', handleDrawEnd);
+    $canvas.on('touchstart', handleTouchStart);
+    $canvas.on('touchmove', handleTouchMove);
+    $canvas.on('touchend touchcancel', handleTouchEnd);
+   
+    //Kill any attempts to open the god forsaken context menu
+    $(document).bind('contextmenu', (e) => { return false; });
 
-    function handleDraw(e){
-        //This method does not deal with any more than one finger!
-        if(e.originalEvent.touches.length > 1) return;
-        drawPoint(getTouchPos(e, 0))
-    }
-    function handleDrawEnd(e){
-        touchEnd();
-    }
     function handleSwipe(e){
         let angle = e.currentDirection;
         //Check that it is a  horizontal swipe
         if((angle > 150 && angle < 210) || (angle < 30 && angle > 330)) changeColor();
     }
     function handlePinch(e){
-        changePenWidth(e.change);
+        openMenu(e.detail.center);    
     }
-    function handleRotate(e){}
+    function handleRotate(e){
+    
+    }
+
+    function handleTouchStart(e){
+        if(menuOpen) closeMenu(true)     
+        //console.log("start");
+        //console.log(e.originalEvent.changedTouches);
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            addLine(pos, touch.identifier);    
+        }        
+    }
+
+    function handleTouchMove(e){ 
+        //  console.log("move");
+        //console.log(e.originalEvent.changedTouches);
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            addToLine(pos, touch.identifier);    
+        }        
+    }
+
+    function handleTouchEnd(e){ 
+        for(let i = 0;i < e.originalEvent.touches.length;i++){
+            let touch = e.originalEvent.touches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            finishLine(pos, touch.identifier);    
+        }        
+    }
 });
+
+let canTouch = true;
+function startTouchButtonTimeout(){
+    canTouch = false;
+    setTimeout(() => { canTouch = true; }, 125);
+}

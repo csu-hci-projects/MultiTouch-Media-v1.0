@@ -24,8 +24,8 @@ function updatePreview(){
     
     lineWidthCTX.clearRect(0, 0, 100, 100); 
     lineWidthCTX.beginPath();
-    lineWidthCTX.fillStlye = lineColor
-    lineWidthCTX.strokeStlye = "#FF0000";
+    lineWidthCTX.fillStyle = lineColor
+    lineWidthCTX.strokeStyle = "#FF0000";
     lineWidthCTX.lineWidth = 2;
     lineWidthCTX.arc(previewX, previewY, currLineWidth / 2, 0, 2 * Math.PI);
     isErasing ? lineWidthCTX.stroke() : lineWidthCTX.fill();

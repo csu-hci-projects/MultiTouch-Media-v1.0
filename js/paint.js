@@ -2,16 +2,16 @@
 //https://www.w3schools.com/tags/ref_canvas.asp
 let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 60;
 let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", 
-    eraserWidth = 26, lineWidth = MIN_PEN_WIDTH, lines = [];
+    lineWidth = MIN_PEN_WIDTH, lines = [];
 let isErasing = false;
 let renderInterval = null;
 function Paint_onLoad(){
     canvas = document.getElementById("paint");
     ctx = canvas.getContext("2d");
     Paint_onResize();
-    touchEnd();
 
     $("img#logo").on("load", addLogoToCanvas);
+    renderInterval = setInterval(render, 15);
 }
 
 function addLogoToCanvas(){
@@ -25,80 +25,105 @@ function Paint_onResize(){
     ctx.canvas.height = window.innerHeight;
 }
 
-let linePointer = 0, doRender = true, point = null, line = null;
+let point = null;
 function render(){
-    //If we should render and there are lines to render, loop.
-    while(doRender && linePointer < lines.length){
-        //If there is a point to be drawn and its the first point...
-        if(lines[linePointer].hasNext && lines[linePointer].drawPointer == 0){ 
-            //Start a new path, and set some vars related to this line.
-            ctx.beginPath();
-            ctx.lineWidth = lines[linePointer].width;
-            ctx.strokeStyle = lines[linePointer].color;
-            //Keeps lines looking like they are connected.
-            ctx.lineCap = "round";
-            //Set the starting point for the line.
-            point = lines[linePointer].next();
-            //Move the canvas 'pen' to the first point.
-            ctx.moveTo(point.x, point.y);
+    for(let i = 0;i < lines.length;i++){
+        //If this line is finished being drawn by the user and the computer, continue.
+        if(lines[i].finshed && !lines[i].hasNext) continue;
+
+        //If this is the first point to be drawn for this line
+        if(lines[i].hasNext){
+            if(lines[i].points.length == 1 && lines[i].finished) setupPoint(i);
+            else setupLine(i);
         }
-        //While there are points to draw...
-        while(lines[linePointer].hasNext){
-            //Get the point
-            point = lines[linePointer].next();
+
+        while(lines[i].hasNext){
+            point = lines[i].next(); 
             //Draw from the previous point to the current point.
             ctx.lineTo(point.x, point.y);
-            //Output the results.
+            //Draw the results
             ctx.stroke();
         }
-            //If the line is done being drawn by the user
-           //then we can imply that all of its points have been drawn by the loop above.
-          //Keep in mind that this code runs every 15ms, but is still sequential, 
-         //so `finished` would have been set prior to render being called,
-        //which implies that all of the points are preset in the line when render is called.
-        if(lines[linePointer].finished) {
-            //Move on to the next line.
-            linePointer++;
-            //If there are no more lines to process, stop rendering.
-            if(linePointer == lines.length) doRender = false;
-        }
-        //If the line is not finished being drawn
-        //And there is no next point, stop trying to render.
-        else if(!lines[linePointer].hasNext) doRender = false;
+    }
+}
+function setupPoint(index) { setupLine(index, true); }
+//Setup the canvas to be ready for the next line to be drawn.
+function setupLine(index, isPoint=false){
+     //Start a new line
+    //This must happen anytime anything about a line changes (Color, width).
+    ctx.beginPath();
+    //Keeps lines looking like they are connected.
+    ctx.lineCap = "round";
+    
+    ctx.strokeStyle = lines[index].color;
+    ctx.fillStyle = lines[index].color;
+    
+     //If it is a point peek at the last element, otherwise use the iterator.
+    point = isPoint ? lines[index].points[lines[index].points.length - 1] 
+                    : lines[index].next();
+    if(isPoint){
+        //Draw a circle and fill it
+        ctx.arc(point.x, point.y, lines[index].width/2, 0, 2 * Math.PI);
+        ctx.fill();
+        //Resets the settings for this line
+        setupLine(index);
+    } else {
+        let initialPoint = Object.assign({}, lines[index].points[lines[index].drawPointer - 2]);
+        ctx.lineWidth = lines[index].width;
+        ctx.moveTo(initialPoint.x, initialPoint.y); 
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+
     }
 }
 
+//Hooked up to mouse events and still works it seems
 function drawPoint(pos){
     //If the last line to be drawn is finished, make a new line to draw.
     if(lines.length == 0 || lines[lines.length - 1].finished == true) {
-        if(isErasing) lines.push(new Line(eraserWidth, canvasColor));
+        if(isErasing) lines.push(new Line(lineWidth, canvasColor));
         else          lines.push(new Line(lineWidth, lineColor));
     }
     //Push the point back to the most recent line.
     let copy = lines[lines.length - 1].push(pos);
     if(!copy) doRender = true;
-    if(renderInterval == null) renderInterval = setInterval(render, 15);
 }
 
-
-  //Informs that this line is done being drawn.
- //Called whenever a the color/width/many other 
-//This because is lines can only have one color and width on the canvas.
-function touchEnd(){
-    if(lines.length > 0) lines[lines.length - 1].finished = true;
-    doRender = true;
+function addLine(pos, fid){ 
+    if(menuOpen) closeMenu();
+    //Make a new line
+    let l = new Line(lineWidth, isErasing ? canvasColor : lineColor, fid)
+    //Put the point on the line
+    l.push(pos);
+    lines.push(l);
+    //console.log("Added line with fid: " + fid);
 }
 
-//Stolen from: https://stackoverflow.com/a/1484514    
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+function getLine(fid){
+    for(let i = lines.length - 1;i >= 0;i--)
+        if(lines[i].fid == fid) 
+            return i;
+    return -1;
 }
 
+function isValidLine(index){
+    return (index > -1 && index < lines.length)
+}
+
+function addToLine(pos, fid){
+    let i = getLine(fid);
+    if(isValidLine(i)) lines[i].push(pos);
+    else throw "Could not find line with fid: " + fid + " | found: " + i;
+    //console.log("Added to line: " + i + " | fid: " + fid);
+}   
+
+function finishLine(pos, fid){ 
+    let i = getLine(fid);
+    if(isValidLine(i)) lines[i].finished = true;
+    else throw "Could not find line with fid: " + fid;
+//    lines.map(line => line.reset());
+    //console.log("Finished line: " + i + " | fid: " + fid);
+}
 
 function getMousePos(event){
     let m = event.originalEvent;
