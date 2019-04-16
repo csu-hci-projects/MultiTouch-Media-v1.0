@@ -35,7 +35,9 @@ function setPenWidth(newWidth){
     //Ensure width is no larger than the max we set.
     else if(newWidth > PEN_WIDTH_RANGE + MIN_PEN_WIDTH) newWidth = MAX_PEN_WIDTH;
     //Set the new line width.
-    lineWidth = newWidth; 
+    lineWidth = newWidth;
+
+    updatePreview();
 }
 
 function setPenWidthByPercent(percent){
@@ -47,6 +49,10 @@ function setPenWidthByPercent(percent){
 function setColor(colorHex){
     //Set the line color (from paint.js)
     lineColor = colorHex;
+
+    //If they choose a color but are erasing, switch modes for convenience.
+    if(isErasing) usePen();
+    //Update the lineWidth preview
     updatePreview();
 }
 
@@ -58,9 +64,6 @@ function resetPainting(isUndo=false){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Put the logo back on the canvas
     addLogoToCanvas();
-    //Reset which line the render function is on.
-    linePointer = 0;
-    lastFinishedLine = 0;
 }
 
 //Delete the last line drawn to the painting
