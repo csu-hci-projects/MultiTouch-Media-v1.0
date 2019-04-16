@@ -17,7 +17,6 @@ function initMenu(){
 
 function openMenu(center){
     if(menuOpen) closeSubMenus();
-    touchEnd();
     let wDiff = window.innerWidth - (center.x + fullRadius);
     let wZero = center.x - fullRadius;
     if(wDiff < 0) center.x += wDiff;

@@ -37,8 +37,6 @@ function setPenWidth(newWidth){
     //Set the new line width.
     if(isErasing) eraserWidth = newWidth;
     else          lineWidth = newWidth; 
-    //Inform paint.js that the last line is finished (due to the width change). 
-    touchEnd();
 }
 
 function setPenWidthByPercent(percent){
@@ -50,8 +48,6 @@ function setPenWidthByPercent(percent){
 function setColor(colorHex){
     //Set the line color (from paint.js)
     lineColor = colorHex;
-    //Inform paint.js that the last line is finished (due to the color change). 
-    touchEnd();
     updatePreview();
 }
 
@@ -74,8 +70,6 @@ function undo(){
     lines = lines.slice(0, -1);
     //Reset the painting, but with special conditions.
     resetPainting(true);
-    //We have to re-render everything.
-    doRender = true;
     //Reset each lines iterator variables.
     lines.map(line => line.reset());
 }
@@ -105,8 +99,7 @@ function modeToggle(){
 
 //Get the line width for this draw mode.
 function getCurrentLineWidth(){
-    if(isErasing) return eraserWidth;
-    else          return lineWidth;
+    return lineWidth;
 }
 
 //Opens the linewidth submenu next to the linestyle image.

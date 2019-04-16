@@ -11,6 +11,7 @@ function Paint_onLoad(){
     Paint_onResize();
 
     $("img#logo").on("load", addLogoToCanvas);
+    renderInterval = setInterval(render, 15);
 }
 
 function addLogoToCanvas(){
@@ -54,15 +55,18 @@ function setupLine(index, isPoint=false){
     ctx.beginPath();
     //Keeps lines looking like they are connected.
     ctx.lineCap = "round";
-    //Set the line and fill color.
+    
     ctx.strokeStyle = lines[index].color;
     ctx.fillStyle = lines[index].color;
-    //get the starting point for the line.
+    
+     //If it is a point peek at the last element, otherwise use the iterator.
     point = isPoint ? lines[index].points[lines[index].points.length - 1] 
                     : lines[index].next();
     if(isPoint){
+        //Draw a circle and fill it
         ctx.arc(point.x, point.y, lines[index].width/2, 0, 2 * Math.PI);
         ctx.fill();
+        //Resets the settings for this line
         setupLine(index);
     } else {
         ctx.moveTo(point.x, point.y); 
@@ -78,7 +82,6 @@ function drawPoint(pos){
     //Push the point back to the most recent line.
     let copy = lines[lines.length - 1].push(pos);
     if(!copy) doRender = true;
-    if(renderInterval == null) renderInterval = setInterval(render, 15);
 }
 
 function addLine(pos, fid){ 
@@ -86,8 +89,8 @@ function addLine(pos, fid){
     let l = new Line(lineWidth, isErasing ? canvasColor : lineColor, fid)
     //Put the point on the line
     l.push(pos);
-
     lines.push(l);
+    //console.log("Added line with fid: " + fid);
 }
 
 function getLine(fid){
@@ -105,21 +108,14 @@ function addToLine(pos, fid){
     let i = getLine(fid);
     if(isValidLine(i)) lines[i].push(pos);
     else throw "Could not find line with fid: " + fid + " | found: " + i;
+    //console.log("Added to line: " + i + " | fid: " + fid);
 }   
 
 function finishLine(pos, fid){ 
     let i = getLine(fid);
     if(isValidLine(i)) lines[i].finished = true;
     else throw "Could not find line with fid: " + fid;
-}
-
-  //Informs that this line is done being drawn.
- //Called whenever a the color/width/many other 
-//This because is lines can only have one color and width on the canvas.
-function touchEnd(){
-    //Set the last line to being done.
-    if(lines.length > 0) lines[lines.length - 1].finished = true;
-    doRender = true;
+    //console.log("Finished line: " + i + " | fid: " + fid);
 }
 
 function getMousePos(event){

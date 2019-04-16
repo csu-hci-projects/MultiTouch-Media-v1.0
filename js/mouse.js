@@ -16,7 +16,6 @@ $(document).ready(function(){
     function handleMouseEnd(e){
         if(e.which == 1 && mouseDown){    
             drawPoint(getMousePos(e))
-            touchEnd();
             mouseDown = false;
         }
     }
@@ -46,7 +45,6 @@ function canvasMouseDown(e){
         drawPoint(getMousePos(e));
     } 
     else if(e.which == 3){
-        touchEnd();
         mouseDown = false;
         openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
     }

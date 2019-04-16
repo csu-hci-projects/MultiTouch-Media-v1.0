@@ -12,19 +12,13 @@ $(document).ready(function(){
     zt.bind(canvas, 'rotate', handleRotate);   //One or two fingers moving about a radius.  
     
     var $canvas = $("canvas#paint");
-    $canvas.on('touchstart', handleDraw);
-    $canvas.on('touchmove', handleDraw);
-    $canvas.on('touchend', handleDrawEnd);
+    $canvas.on('touchstart', handleTouchStart);
+    $canvas.on('touchmove', handleTouchMove);
+    $canvas.on('touchend touchcancel', handleTouchEnd);
+   
+    //Kill any attempts to open the god forsaken context menu
+    $(document).bind('contextmenu', (e) => { return false; });
 
-    function handleDraw(e){
-        
-        //This method does not deal with any more than one finger!
-        if(e.originalEvent.touches.length > 1) return;
-        drawPoint(getTouchPos(e, 0))
-    }
-    function handleDrawEnd(e){
-        touchEnd();
-    }
     function handleSwipe(e){
         let angle = e.currentDirection;
         //Check that it is a  horizontal swipe
@@ -38,9 +32,26 @@ $(document).ready(function(){
     }
 
     function handleTouchStart(e){
-        for(touch in e.originalEvent.changedTouches){
-            
+        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
+            let touch = e.originalEvent.changedTouches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            addLine(pos, touch.identifier);    
         }        
     }
 
+    function handleTouchMove(e){ 
+        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
+            let touch = e.originalEvent.changedTouches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            addToLine(pos, touch.identifier);    
+        }        
+    }
+
+    function handleTouchEnd(e){ 
+        for(let i = 0;i < e.originalEvent.changedTouches.length;i++){
+            let touch = e.originalEvent.changedTouches[i];
+            let pos = {x: touch.pageX, y: touch.pageY};
+            finishLine(pos, touch.identifier);    
+        }        
+    }
 });
