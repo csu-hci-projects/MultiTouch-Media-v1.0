@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     //https://github.com/zingchart/zingtouch#getting-started
     zt.unbind(canvas);
-    zt.bind(canvas, TwoFingerSwipe, handleSwipe);//Handle a two finger swipe
+    //zt.bind(canvas, TwoFingerSwipe, handleSwipe);//Handle a two finger swipe
     zt.bind(canvas, 'distance', handlePinch);   //Two fingers for pinch zoom
     zt.bind(canvas, 'rotate', handleRotate);   //One or two fingers moving about a radius.  
     
@@ -17,6 +17,7 @@ $(document).ready(function(){
     $canvas.on('touchend', handleDrawEnd);
 
     function handleDraw(e){
+        
         //This method does not deal with any more than one finger!
         if(e.originalEvent.touches.length > 1) return;
         drawPoint(getTouchPos(e, 0))
@@ -30,7 +31,16 @@ $(document).ready(function(){
         if((angle > 150 && angle < 210) || (angle < 30 && angle > 330)) changeColor();
     }
     function handlePinch(e){
-        changePenWidth(e.change);
+        
     }
-    function handleRotate(e){}
+    function handleRotate(e){
+    
+    }
+
+    function handleTouchStart(e){
+        for(touch in e.originalEvent.changedTouches){
+            
+        }        
+    }
+
 });

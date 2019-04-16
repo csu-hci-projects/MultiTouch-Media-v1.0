@@ -1,7 +1,8 @@
 class Line {
-    constructor(width, color){
+    constructor(width, color, identifier=0){
         this.width = width;
         this.color = color;
+        this.fid = identifier;
         this.points = [];
         this.drawPointer = 0;
         this.finished = false;

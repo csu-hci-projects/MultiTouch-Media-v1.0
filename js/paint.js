@@ -9,7 +9,6 @@ function Paint_onLoad(){
     canvas = document.getElementById("paint");
     ctx = canvas.getContext("2d");
     Paint_onResize();
-    touchEnd();
 
     $("img#logo").on("load", addLogoToCanvas);
 }
@@ -25,66 +24,49 @@ function Paint_onResize(){
     ctx.canvas.height = window.innerHeight;
 }
 
-let linePointer = 0, lastFinishedLine = 0, doRender = true, point = null, line = null;
+let point = null;
 function render(){
-    linePointer = lastFinishedLine;
-    while(doRender && linePointer < lines.length){
-        //If the line's first point must be drawn...
-        if(lines[linePointer].drawPointer == 0 && lines[linePointer].hasNext){
-            //there is only one point in this line...
-            if(lines[linePointer].points.length == 1) {
-                if(!lines[linePointer].finished) setupLine(true);
-                else { linePointer++; continue; }
-            } 
-            else if(lines[linePointer].points.length > 1) 
-                setupLine();     
+    for(let i = 0;i < lines.length;i++){
+        //If this line is finished being drawn by the user and the computer, continue.
+        if(lines[i].finshed && !lines[i].hasNext) continue;
+
+        //If this is the first point to be drawn for this line
+        if(lines[i].drawPointer == 0 && lines[i].hasNext){
+            if(lines[i].points.length == 1)     setupPoint(i);
+            else if(lines[i].points.length > 1) setupLine(i);     
         }
 
-        //While there are points to draw...
-        while(lines[linePointer].hasNext){
-            //Get the inext point
-            point = lines[linePointer].next();
+        while(lines[i].hasNext){
+            point = lines[i].next();
+            
             //Draw from the previous point to the current point.
             ctx.lineTo(point.x, point.y);
             //Draw the results
             ctx.stroke();
         }
-
-        if(lines.length == 0){
-            doRender = false;
-            lastFinishedLine = 0;
-            linePointer = 0;
-        } else {
-            if(!lines[linePointer].hasNext){      
-                //if(lines[linePointer].finished)      
-                //    lastFinishedLine++;
-                linePointer++;
-            }
-            if(lastFinishedLine == lines.length) 
-                doRender = false;
-        }
     }
 }
+function setupPoint(index) { setupLine(index, true); }
 //Setup the canvas to be ready for the next line to be drawn.
-function setupLine(isPoint=false){
+function setupLine(index, isPoint=false){
      //Start a new line
     //This must happen anytime anything about a line changes (Color, width).
     ctx.beginPath();
     //Keeps lines looking like they are connected.
     ctx.lineCap = "round";
     //Set the line and fill color.
-    ctx.strokeStyle = lines[linePointer].color;
-    ctx.fillStyle = lines[linePointer].color;
+    ctx.strokeStyle = lines[index].color;
+    ctx.fillStyle = lines[index].color;
     //get the starting point for the line.
-    point = isPoint ? lines[linePointer].points[lines[linePointer].points.length - 1] 
-                    : lines[linePointer].next();
+    point = isPoint ? lines[index].points[lines[index].points.length - 1] 
+                    : lines[index].next();
     if(isPoint){
-        ctx.arc(point.x, point.y, lines[linePointer].width/2, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, lines[index].width/2, 0, 2 * Math.PI);
         ctx.fill();
-        setupLine();
+        setupLine(index);
     } else {
         ctx.moveTo(point.x, point.y); 
-        ctx.lineWidth = lines[linePointer].width;
+        ctx.lineWidth = lines[index].width;
     }
 }
 function drawPoint(pos){
@@ -99,11 +81,43 @@ function drawPoint(pos){
     if(renderInterval == null) renderInterval = setInterval(render, 15);
 }
 
+function addLine(pos, fid){ 
+    //Make a new line
+    let l = new Line(lineWidth, isErasing ? canvasColor : lineColor, fid)
+    //Put the point on the line
+    l.push(pos);
+
+    lines.push(l);
+}
+
+function getLine(fid){
+    for(let i = lines.length - 1;i >= 0;i--)
+        if(lines[i].fid == fid) 
+            return i;
+    return -1;
+}
+
+function isValidLine(index){
+    return (index > -1 && index < lines.length)
+}
+
+function addToLine(pos, fid){
+    let i = getLine(fid);
+    if(isValidLine(i)) lines[i].push(pos);
+    else throw "Could not find line with fid: " + fid + " | found: " + i;
+}   
+
+function finishLine(pos, fid){ 
+    let i = getLine(fid);
+    if(isValidLine(i)) lines[i].finished = true;
+    else throw "Could not find line with fid: " + fid;
+}
 
   //Informs that this line is done being drawn.
  //Called whenever a the color/width/many other 
 //This because is lines can only have one color and width on the canvas.
 function touchEnd(){
+    //Set the last line to being done.
     if(lines.length > 0) lines[lines.length - 1].finished = true;
     doRender = true;
 }
