@@ -33,14 +33,12 @@ function render(){
 
         //If this is the first point to be drawn for this line
         if(lines[i].hasNext){
-            if(lines[i].drawPointer == 0 
-            && lines[i].points.length == 1) setupPoint(i);
+            if(lines[i].points.length == 1 && lines[i].finished) setupPoint(i);
             else setupLine(i);
         }
 
         while(lines[i].hasNext){
-            point = lines[i].next();
-            
+            point = lines[i].next(); 
             //Draw from the previous point to the current point.
             ctx.lineTo(point.x, point.y);
             //Draw the results
