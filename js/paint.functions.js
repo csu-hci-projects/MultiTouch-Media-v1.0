@@ -21,6 +21,13 @@ function readURL(){
     } else {}
 }
 
+//Saves the current canvas as a png
+function saveImage(){
+    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href = image;
+    console.log("Trying to save");
+}
+
 //Change the pen width by an ammount.
 function changePenWidth(diff){
     let newWidth = lineWidth + (diff);
