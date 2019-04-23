@@ -61,8 +61,3 @@ $(document).ready(function(){
     }
 });
 
-let canTouch = true;
-function startTouchButtonTimeout(){
-    canTouch = false;
-    setTimeout(() => { canTouch = true; }, 125);
-}

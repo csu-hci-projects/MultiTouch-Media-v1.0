@@ -6,16 +6,21 @@ $(document).ready(function(){
     $canvas.on('mouseup', handleMouseEnd);
     $(document).on('contextmenu', e => e.preventDefault());
     $(document).on('wheel', handleScroll)
-    
+   
+    let mouseDown = false;
     function handleMouseStart(e){
-        canvasMouseDown(e);   
+        if(e.which == 1 && !mouseDown){
+            addLine(getMousePos(e), 0);
+            mouseDown = true;
+        } else if(e.which == 3 && !menuOpen) openMenu(getMousePos(e))
     }
     function handleMouseDraw(e){
-        if(e.which == 1 && mouseDown) drawPoint(getMousePos(e));  
+        if(e.which == 1 && mouseDown) 
+            addToLine(getMousePos(e), 0);  
     }
     function handleMouseEnd(e){
         if(e.which == 1 && mouseDown){    
-            drawPoint(getMousePos(e))
+            finishLine(getMousePos(e), 0)
             mouseDown = false;
         }
     }
@@ -34,19 +39,3 @@ $(document).ready(function(){
     }
 
 });
-
-var mouseDown = false;
-function canvasMouseDown(e){
-    e.preventDefault();
-    e.stopPropagation();
-    if(e.which == 1){    
-        if(menuOpen) closeMenu();
-        mouseDown = true;
-        drawPoint(getMousePos(e));
-    } 
-    else if(e.which == 3){
-        mouseDown = false;
-        openMenu({x: e.originalEvent.x, y: e.originalEvent.y});
-    }
-    else if(menuOpen) closeMenu();
-}

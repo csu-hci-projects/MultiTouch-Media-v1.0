@@ -9,92 +9,32 @@
 }
 
 #basic #tools img{
+    position: absolute;
     width: 50px;
     height: 50px;
-}
-
-#basic #tools #palette{
-    position: absolute;
-    top:20%;
-    left:5%;
-    width: 50px;
-    height: 50px;
-}
-
-#basic #colorSelector{
-    position: absolute;
-    border-collapse: collapse;
-    border-spacing: 0;
-    top: 25%;
-    left:5%;
-}
-
-#basic #colorSelector  td{
-    border-style:solid;
-    border-width: 1px;
-    padding: 15px 15px;
-}
-
-
-
-#basic #tools #lineStyle{
-    position: absolute;
-    top: 400px;
-    left:5%;
-    width: 50px;
-    height: 50px;
-}
-
-#basic #increaseSize{
-    position: absolute;
-    top: 450px;
-    left: 5%;
-    width:40%;
-    height: 5%;
-}
-
-#basic #decreaseSize{
-    position: absolute;
-    top: 450px;
-    left: 50%;
-    width:40%;
-    height: 5%;
 }
 
 #basic #tools #undo{
-    position: absolute;
-    top: 55%;
+    top: 67.5%;
     left:5%;
-    width: 50px;
-    height: 50px;
 }
 #basic #tools #eraser{
-    position: absolute;
-    top: 55%;
-    left:50%;
-    width: 50px;
-    height: 50px;
+    top: 67.5%;
+    left: 50%;
 }
 
 #basic #tools #save{
-    position: absolute;
     top: 80%;
     left: 5%;
 }
 
 #basic #tools #upload{
-    position: absolute;
-    top:65%;
-    left:5%;
-    width: 50px;
-    height: 50px;
+    top: 80%;
+    left: 50%;
 }
 #basic #tools #trash{
-    position: absolute;
     top:90%;
     left:5%;
-    width: 50px;
-    height: 50px;
 }
 
 #background {
