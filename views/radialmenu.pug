@@ -5,12 +5,12 @@ input(type = 'file', id = 'imgUpload', name = 'backgroundImage' style = 'display
 div(id='background')
 
 div#radial.menu
-    img(src='../images/1x1.png', onclick="readURL()")
+    img(src='../images/1x1.png')
     div#tools 
         img#palette(src="../images/palette.png")
         img#undo(src="../images/undo.png")
         img#trash(src="../images/trash.png")
-        img#upload(src="../images/upload.png")
+        img#upload(src="../images/upload.png", onclick='getImage()')
         img#save(src="../images/floppy.png", onclick='saveImage()')
         img#lineStyle(src="../images/gear.png")
         img#eraser(src="../images/eraser.png")
