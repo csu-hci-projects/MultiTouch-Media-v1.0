@@ -137,6 +137,10 @@ function handleLineStyleSelect(){
         if(diffX < 0) {
             $(".menu").animate({left: "+=" + diffX}, 25);
             $("div#widthwrapper").animate({left: "+=" + diffX}, 25);
+        
+            if(isColorPickerOpen){
+                $("div#colorPickerContainer").animate({left: "+=" + diffX}, 25);        
+            }
         }
     } else {
         closeLineWidthMenu();
@@ -162,14 +166,17 @@ function handleColorPickerSelect(){
     if(!isColorPickerOpen){
         let where = $("img#palette").offset();
         where.left -=  $("div#colorPickerContainer").width() / 2 - $("div#tools img#palette").width() / 2;
-        where.top -= $("div#colorPickerContainer").height();
+        where.top -= $("div#colorPickerContainer").height() + 25;
         openColorPickerMenu(where);
-        let diffY = (where.top - 25);
+        let diffY = where.top;
         //If the menu would end up off screen, 
         //quickly shift the whole ui over to accommodate.
         if(diffY < 0) {
             $(".menu").animate({top: "-=" + (diffY - 25)}, 25);
             $("div#colorPickerContainer").animate({top: "-=" + diffY}, 25);
+            if(isLineWidthOpen){
+                $("div#widthWrapper").animate({top: "-=" + diffY}, 25);        
+            }
         }
     } else {
         closeColorPickerMenu();
@@ -179,14 +186,14 @@ function handleColorPickerSelect(){
 function openColorPickerMenu(where){ 
     $("div#colorPickerContainer").css({top: where.top, left: where.left, opacity: 0});
     $("div#colorPickerContainer").animate({opacity: 1}, 25);
-    isLineWidthOpen = true;
+    isColorPickerOpen = true;
 }
 
 function closeColorPickerMenu(){
     $("div#colorPickerContainer").animate({opacity: 0}, 15, function(){ 
         $("div#colorPickerContainer").css({top: -9999, left: -9999});
     });
-    isLineWidthOpen = false
+    isColorPickerOpen = false
 }
 
 function closeSubMenus(){
