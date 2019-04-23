@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("div#tools img#trash").on('mousedown touchstart', () => resetPainting());
     $("div#tools img#undo").on('mousedown touchstart', () => undo());
     $("div#tools img#eraser").on('mousedown touchstart', () => modeToggle());
-    $("div#tools img#upload").on('mousedown touchstart', () => getImage());
+    document.getElementById('imgUpload').addEventListener('change', handleImage, false);
 });
 
 let canTouch = true;
@@ -10,20 +10,27 @@ function startTouchButtonTimeout(){
     canTouch = false;
     setTimeout(() => { canTouch = true; }, 125);
 }
-function getImage(){
-    $('#imgUpload').trigger('click');
-}
 
-function readURL(){
-    var file = document.getElementById("imgUpload").files[0];
+//When the upload button is clicked, this triggers a click for the file upload
+$(function(){
+    $("div#tools img#upload").on('click', function() {
+        $('#imgUpload').click();
+    });
+});
+
+//Gets the uploaded image and sets it as the background for the canvas
+function handleImage(e){
     var reader = new FileReader();
-    reader.onloadend = function(){
-        document.getElementById('background').style.backgroundImage = "url(" + reader.result + ")";
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            canvas.width = img.width;
+            canvas.height = img.height;
+            document.getElementById('paint').getContext('2d').drawImage(img, 0, 0);
+        }
+        img.src = event.target.result;
     }
-
-    if(file){
-        reader.readAsDataURL(file);
-    } else {}
+    reader.readAsDataURL(e.target.files[0]);
 }
 
 //Saves the current canvas as a png
