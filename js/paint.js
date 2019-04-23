@@ -77,18 +77,7 @@ function setupLine(index, isPoint=false){
     }
 }
 
-//Hooked up to mouse events and still works it seems
-function drawPoint(pos){
-    //If the last line to be drawn is finished, make a new line to draw.
-    if(lines.length == 0 || lines[lines.length - 1].finished == true) {
-        if(isErasing) lines.push(new Line(lineWidth, canvasColor));
-        else          lines.push(new Line(lineWidth, lineColor));
-    }
-    //Push the point back to the most recent line.
-    let copy = lines[lines.length - 1].push(pos);
-    if(!copy) doRender = true;
-}
-
+function startLine(pos, fid) { addLine(pos, fid); }
 function addLine(pos, fid){ 
     if(menuOpen) closeMenu();
     //Make a new line

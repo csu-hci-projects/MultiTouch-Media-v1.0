@@ -11,8 +11,9 @@ function initMenu(){
     setToolAttributes();
     setToolPositions();
 
-    $("#radial > img").on('mousedown', canvasMouseDown);
+    $("#radial > img").on('mousedown touchstart', closeMenu);
     $("div#tools img#lineStyle").on('mousedown touchstart', () => handleLineStyleSelect());
+    $("div#tools img#palette").on('mousedown touchstart', () => handleColorPickerSelect());
 }
 
 function openMenu(center){
