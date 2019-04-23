@@ -1,6 +1,6 @@
 var color_picker = iro.ColorPicker('#colorPickerContainer', {
     color: "#1E4D2B",
-    width: 250,
+    width: 225,
 });
 
 color_picker.on("color:change", (color, changes) => {

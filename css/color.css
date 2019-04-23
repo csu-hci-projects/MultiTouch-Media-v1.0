@@ -1,0 +1,7 @@
+#colorPickerContainer{
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    /*transform: rotate(-90deg);*/
+    z-index: 11;
+}

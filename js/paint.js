@@ -1,7 +1,7 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
 let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 60;
-let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#000000", 
+let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#1E4D2B", 
     lineWidth = MIN_PEN_WIDTH, lines = [];
 let isErasing = false;
 let renderInterval = null;
