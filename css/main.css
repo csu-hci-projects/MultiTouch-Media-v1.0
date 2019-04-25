@@ -35,7 +35,7 @@ div#gestureArea {
     z-index: 1;
     position: absolute;
     top: 0; left: 0; 
-    width: 325px; height: 100%;
-    background-color: blue;
+    width: 10%; height: 100%;
+    background-color: #88C3FF;
     opacity: 50%;
 }
