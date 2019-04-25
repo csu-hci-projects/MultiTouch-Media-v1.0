@@ -10,7 +10,7 @@ function Paint_onLoad(){
     ctx = canvas.getContext("2d");
     Paint_onResize();
 
-    $("img#logo").on("load", addLogoToCanvas);
+    //$("img#logo").on("load", addLogoToCanvas);
     renderInterval = setInterval(render, 15);
 }
 
