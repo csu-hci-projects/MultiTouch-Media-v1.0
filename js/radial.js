@@ -72,7 +72,7 @@ function setToolPositions(){
             top: pos.y,
             left: pos.x,
             width: 2 * toolRadius,
-            height: 2 *toolRadius
+            height: 2 * toolRadius
         });  
     });
 }

@@ -14,6 +14,8 @@
 
 #radial #tools img {
     position: absolute;
+    background-color: #EEEEEE90;
+    border-radius: 30%;
 }
 
 #background {
