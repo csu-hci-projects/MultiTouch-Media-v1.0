@@ -17,8 +17,6 @@ function initMenu(){
     setMenuAttributes();
     setToolPositions();
     setToolAttributes();
-
-    $("#dial > img").on('mousedown', canvasMouseDown);
 }
 
 function openMenu(center){
