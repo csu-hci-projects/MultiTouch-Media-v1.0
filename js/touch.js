@@ -60,7 +60,7 @@ $(document).ready(function(){
         }        
     }
 
-    $("div#gestureArea").on("touchstart", handleGestureTouch);
+    $("div#gestureArea").on("mousedown touchstart", handleGestureTouch);
 
     function handleGestureTouch(event){
         let center;

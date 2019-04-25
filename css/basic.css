@@ -4,7 +4,7 @@
 #basic{
     display: none;
     position: absolute;
-    top: 0; left: 0;
+    top: 0; left: 10%;
     width: 370px; height: 100%;
     padding: 0; margin: 0;
     border: 2px solid black;

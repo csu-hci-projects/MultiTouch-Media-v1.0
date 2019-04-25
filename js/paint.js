@@ -16,7 +16,7 @@ function Paint_onLoad(){
 
 function addLogoToCanvas(){
     let img = document.getElementById("logo");
-    ctx.drawImage(img, $("#gestureArea").width() + 15, 15);
+    ctx.drawImage(img, window.innerWidth*.15 + 15, 15);
     $("img#logo").css({display: 'none'})
 }
 
