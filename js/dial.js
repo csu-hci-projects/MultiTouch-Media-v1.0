@@ -20,6 +20,7 @@ function initMenu(){
 }
 
 function openMenu(center){
+    startMenuTimer();
     let wDiff = window.innerWidth - (center.x + fullRadius);
     let wZero = (center.x - fullRadius) - $("#gestureArea").width()
     if(wDiff < 0) center.x += wDiff;
@@ -38,6 +39,7 @@ function openMenu(center){
 }
 
 function closeMenu(now=false){
+    stopMenuTimer();
     menuOpen = false
     $("#dial").animate({opacity: 0}, 100, function(){
         $("#dial").css({top: -9999, left: -9999});

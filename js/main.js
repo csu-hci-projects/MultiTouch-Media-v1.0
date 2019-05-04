@@ -14,3 +14,18 @@ $(document).ready(function(){
         openMenu(center);
     }
 });
+
+
+
+var lastTime, totalTime = 0;
+function startMenuTimer(){
+    lastTime = (new Date).getTime();    
+}
+
+function stopMenuTimer(){
+    totalTime += (new Date).getTime() - lastTime;
+}
+
+function resetMenuTimer(){
+    totalTime = 0;
+}

@@ -24,9 +24,10 @@ function handleImage(e){
     reader.onload = function(event){
         var img = new Image();
         img.onload = function(){
-            canvas.width = img.width;
-            canvas.height = img.height;
-            document.getElementById('paint').getContext('2d').drawImage(img, 0, 0);
+            var hRatio = canvas.width / img.width    ;
+            var vRatio = canvas.height / img.height  ;
+            var ratio  = Math.min ( hRatio, vRatio );
+            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * ratio, img.height * ratio);
         }
         img.src = event.target.result;
     }

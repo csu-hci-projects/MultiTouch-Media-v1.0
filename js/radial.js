@@ -17,6 +17,7 @@ function initMenu(){
 }
 
 function openMenu(center){
+    startMenuTimer();
     if(menuOpen) closeSubMenus();
  
     let wDiff = window.innerWidth - (center.x + fullRadius);
@@ -35,6 +36,7 @@ function openMenu(center){
 }
 
 function closeMenu(now=false){ 
+    stopMenuTimer();
     closeSubMenus();
     menuOpen = false
     //if(now) {

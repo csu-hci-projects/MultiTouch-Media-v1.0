@@ -1,9 +1,11 @@
 let menuOpen=true;
 function openMenu(){ 
+    startMenuTimer();
     $("#basic, #widthWrapper, #colorPickerContainer").css({display: "block"});
 }
 
 function closeMenu(){
+    stopMenuTimer();
     $("#basic, #widthWrapper, #colorPickerContainer").css({display: "none"});
 }
 
