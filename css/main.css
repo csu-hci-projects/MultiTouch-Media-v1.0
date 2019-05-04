@@ -1,7 +1,5 @@
-img#logo{
-    position: absolute;
-    top: 15;
-    left: 15;
+body {
+    overflow: hidden;
 }
 div#canvasWrapper, canvas#paint{
     position: absolute;
@@ -28,4 +26,16 @@ img {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+
+div#gestureArea {
+    z-index: 1;
+    position: absolute;
+    top: 0; left: 0; 
+    width: 10%; height: 100%;
+    background-color: #88C3FF;
+    opacity: 50%;
+    box-sizing: border-box;
+    border-right: 2px solid black;
 }

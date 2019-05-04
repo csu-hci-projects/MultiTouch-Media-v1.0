@@ -86,7 +86,7 @@ function resetPainting(isUndo=false){
     //Clear the canvas itself.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Put the logo back on the canvas
-    addLogoToCanvas();
+    //addLogoToCanvas();
 }
 
 //Delete the last line drawn to the painting

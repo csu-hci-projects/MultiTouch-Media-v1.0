@@ -20,7 +20,7 @@ function openMenu(center){
     if(menuOpen) closeSubMenus();
  
     let wDiff = window.innerWidth - (center.x + fullRadius);
-    let wZero = center.x - fullRadius;
+    let wZero =   (center.x - fullRadius) - $("#gestureArea").width()
     if(wDiff < 0) center.x += wDiff;
     else if(wZero < 0) center.x -= wZero;
 
@@ -72,7 +72,7 @@ function setToolPositions(){
             top: pos.y,
             left: pos.x,
             width: 2 * toolRadius,
-            height: 2 *toolRadius
+            height: 2 * toolRadius
         });  
     });
 }

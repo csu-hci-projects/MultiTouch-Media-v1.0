@@ -1,6 +1,6 @@
 //Made with the good faith of W3Schools;
 //https://www.w3schools.com/tags/ref_canvas.asp
-let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 60;
+let MIN_PEN_WIDTH = 2, PEN_WIDTH_RANGE = 80;
 let canvas, ctx, canvasColor = "#FFFFFF", lineColor="#1E4D2B", 
     lineWidth = MIN_PEN_WIDTH, lines = [];
 let isErasing = false;
@@ -10,13 +10,13 @@ function Paint_onLoad(){
     ctx = canvas.getContext("2d");
     Paint_onResize();
 
-    $("img#logo").on("load", addLogoToCanvas);
+    //$("img#logo").on("load", addLogoToCanvas);
     renderInterval = setInterval(render, 15);
 }
 
 function addLogoToCanvas(){
     let img = document.getElementById("logo");
-    ctx.drawImage(img, 15, 15);
+    ctx.drawImage(img, window.innerWidth*.15 + 15, 15);
     $("img#logo").css({display: 'none'})
 }
 

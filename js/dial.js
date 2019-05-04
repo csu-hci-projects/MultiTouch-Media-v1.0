@@ -17,13 +17,11 @@ function initMenu(){
     setMenuAttributes();
     setToolPositions();
     setToolAttributes();
-
-    $("#dial > img").on('mousedown', canvasMouseDown);
 }
 
 function openMenu(center){
     let wDiff = window.innerWidth - (center.x + fullRadius);
-    let wZero = center.x - fullRadius;
+    let wZero = (center.x - fullRadius) - $("#gestureArea").width()
     if(wDiff < 0) center.x += wDiff;
     else if(wZero < 0) center.x -= wZero;
 
