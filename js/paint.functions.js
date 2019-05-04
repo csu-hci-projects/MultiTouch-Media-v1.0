@@ -135,6 +135,8 @@ function getCurrentLineWidth(){
 
 //Opens the linewidth submenu next to the linestyle image.
 function handleLineStyleSelect(){
+    if(!canTouch) return;
+    else startTouchButtonTimeout();
     if(!isLineWidthOpen){
         let where = $("img#lineStyle").offset();
         where.left += 60;
@@ -171,6 +173,8 @@ function closeLineWidthMenu(){
 
 let isColorPickerOpen = false
 function handleColorPickerSelect(){
+    if(!canTouch) return;
+    else startTouchButtonTimeout();
     if(!isColorPickerOpen){
         let where = $("img#palette").offset();
         where.left -=  $("div#colorPickerContainer").width() / 2 - $("div#tools img#palette").width() / 2;
